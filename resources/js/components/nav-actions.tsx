@@ -62,7 +62,7 @@ export function NavActions() {
                                         </SidebarMenuItem>
                                         <SidebarMenuItem>
                                             <Link className="w-full" method="post" href={route('logout')} as="button">
-                                                <SidebarMenuButton className="hover:bg-red-50 hover:font-bold">
+                                                <SidebarMenuButton>
                                                     <LogOut className="text-muted-foreground" />
                                                     <span>Logout</span>
                                                 </SidebarMenuButton>

@@ -80,7 +80,7 @@ export default function LoginPage() {
                                 checked={data.remember}
                                 onClick={() => setData('remember', !data.remember)}
                                 tabIndex={3}
-                                className={errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
+                                className={errors.remember ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
                             />
                             <Label htmlFor="remember">Remember me</Label>
                         </div>
