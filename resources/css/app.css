@@ -8,8 +8,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -156,4 +155,23 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* Apply scrollbar styling only in dark mode */
+.dark .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #6b6b6b transparent; /* Firefox */
+}
+
+.dark .scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dark .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dark .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #6b6b6b;
+    border-radius: 6px;
 }

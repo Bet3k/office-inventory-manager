@@ -28,16 +28,27 @@ export interface SharedData {
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+
     [key: string]: unknown;
 }
 
 export interface User {
     id: number;
-    name: string;
     email: string;
-    avatar?: string;
     email_verified_at: string | null;
+    profile: Profile;
     created_at: string;
     updated_at: string;
+
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Profile {
+    id: number;
+    first_name: string;
+    last_name: string;
+    gender?: string;
+    date_of_birth?: string | undefined;
+
     [key: string]: unknown; // This allows for additional properties...
 }

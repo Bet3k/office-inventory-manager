@@ -1,0 +1,5 @@
+parameters:
+    excludePaths:
+        analyse:
+            - tests
+            - app/Http/Middleware
