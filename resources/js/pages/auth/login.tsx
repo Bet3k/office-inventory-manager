@@ -56,6 +56,7 @@ export default function LoginPage() {
                                 label="Password"
                                 name="password"
                                 forgotPassword={true}
+                                forgotPasswordLink={route('forgot-password.create')}
                                 required
                                 tabIndex={2}
                                 autoComplete="password"

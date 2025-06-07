@@ -1,29 +1,26 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 Route::middleware('guest')->group(function () {
 
     Route::get('/', [LoginController::class, 'create'])
         ->name('login');
 
-    Route::get('logs', function () {
-        $user = User::query()->whereEmail('xoviry@mailinator.com')->first();
-        Auth::login($user);
-
-        return to_route('dashboard');
-    });
-
     Route::get('/register', [RegisterUserController::class, 'create'])
         ->name('register.create');
     Route::post('/register', [RegisterUserController::class, 'store'])
         ->name('register.store');
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
+        ->name('forgot-password.create');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])
+        ->name('forgot-password.store');
 });
 
 Route::middleware('auth')->group(function () {

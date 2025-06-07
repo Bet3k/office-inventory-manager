@@ -2,7 +2,7 @@ import InputWithError from '@/components/input-with-error';
 import LoadingButton from '@/components/loading-button';
 import PasswordInputWithError from '@/components/password-input-with-error';
 import TextLink from '@/components/text-link';
-import Layout from '@/layouts/auth-layout';
+import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
@@ -30,7 +30,7 @@ export default function Register() {
         });
     };
     return (
-        <Layout title="Create Account" description="Fill the form below to create your account">
+        <AuthLayout title="Create Account" description="Fill the form below to create your account">
             <Head title="Register" />
             <form className="flex flex-col gap-4" onSubmit={handelRegister}>
                 <div className="grid gap-4">
@@ -115,6 +115,6 @@ export default function Register() {
                     </TextLink>
                 </div>
             </form>
-        </Layout>
+        </AuthLayout>
     );
 }
