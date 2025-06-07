@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 
 type LoginForm = {
@@ -22,10 +23,17 @@ export default function LoginPage() {
         remember: false,
     });
 
+    const handleLogin: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('login.store'), {
+            onFinish: () => reset('password'),
+        });
+    };
+
     return (
         <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
             <Head title="Log in" />
-            <form className="flex flex-col gap-6">
+            <form onSubmit={handleLogin} className="flex flex-col gap-6">
                 <div className="grid gap-6">
                     <div className="flex flex-col gap-4">
                         <Button variant="outline" className="w-full">

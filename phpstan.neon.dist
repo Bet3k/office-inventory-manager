@@ -3,3 +3,4 @@ parameters:
         analyse:
             - tests
             - app/Http/Middleware
+            - app/Providers
