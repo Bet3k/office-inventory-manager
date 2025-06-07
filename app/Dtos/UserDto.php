@@ -13,6 +13,7 @@ readonly class UserDto
     public function __construct(
         public string $id,
         public string $email,
+        public Carbon|null $email_verified_at,
         public bool $downloaded_codes,
         public bool $is_active,
         public Carbon|null $last_login_at,
@@ -30,6 +31,7 @@ readonly class UserDto
         return [
             'id' => $this->id,
             'email' => $this->email,
+            'email_verified_at' => $this->email_verified_at,
             'downloaded_codes' => $this->downloaded_codes,
             'is_active' => $this->is_active,
             'last_login_at' => $this->last_login_at,
@@ -42,6 +44,7 @@ readonly class UserDto
         return new self(
             id: $user->id,
             email: $user->email,
+            email_verified_at: $user->email_verified_at,
             downloaded_codes: $user->downloaded_codes,
             is_active: $user->is_active,
             last_login_at: $user->last_login_at,

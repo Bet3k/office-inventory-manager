@@ -49,10 +49,12 @@ export function NavActions() {
                                 <SidebarGroupContent className="gap-0">
                                     <SidebarMenu>
                                         <SidebarMenuItem>
-                                            <SidebarMenuButton>
-                                                <User className="text-muted-foreground" />
-                                                <span>Profile</span>
-                                            </SidebarMenuButton>
+                                            <Link className="w-full" href={route('profile.show')}>
+                                                <SidebarMenuButton>
+                                                    <User className="text-muted-foreground" />
+                                                    <span>Profile</span>
+                                                </SidebarMenuButton>
+                                            </Link>
                                         </SidebarMenuItem>
                                         <SidebarMenuItem>
                                             <SidebarMenuButton>

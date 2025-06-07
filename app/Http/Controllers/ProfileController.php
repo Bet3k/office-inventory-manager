@@ -2,51 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Actions\Profile\UpdateProfileAction;
+use App\Enums\GenderEnum;
+use App\Http\Requests\Auth\CurrentPasswordRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function show(Request $request): Response
     {
-        $this->authorize('viewAny', Profile::class);
+        $this->authorize('view', $request->user()->profile);
 
-        return Inertia::render('auth/login');
+        return Inertia::render('profile/index', [
+            'gender' => GenderEnum::getValues(),
+        ]);
     }
 
-    public function store(RegisterRequest $request)
-    {
-        $this->authorize('create', Profile::class);
-
-        return Profile::create($request->validated());
-    }
-
-    public function show(Profile $profile)
-    {
-        $this->authorize('view', $profile);
-
-        return $profile;
-    }
-
-    public function update(RegisterRequest $request, Profile $profile)
-    {
+    public function update(
+        ProfileUpdateRequest $request,
+        Profile $profile,
+        UpdateProfileAction $action
+    ): RedirectResponse {
         $this->authorize('update', $profile);
 
-        $profile->update($request->validated());
+        $action->execute($profile, $request);
 
-        return $profile;
+        return back()->with('success', 'Profile updated successfully.');
     }
 
-    public function destroy(Profile $profile)
+    public function destroy(CurrentPasswordRequest $request, Profile $profile): RedirectResponse
     {
-        $this->authorize('delete', $profile);
+        $this->authorize('delete', $request->user()->profile);
 
-        $profile->delete();
+        $profile->user->delete();
 
-        return response()->json();
+        return to_route('login')->with('success', 'Profile deleted successfully. Goodbye!');
     }
 }

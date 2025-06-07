@@ -25,7 +25,7 @@ readonly class ProfileDto
             first_name: $profile->first_name,
             last_name: $profile->last_name,
             gender: $profile->gender,
-            date_of_birth: $profile->date_of_birth ? $profile->date_of_birth : null,
+            date_of_birth: $profile->date_of_birth,
         );
     }
 
@@ -41,7 +41,7 @@ readonly class ProfileDto
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'gender' => $this->gender,
-            'date_of_birth' => $this->date_of_birth,
+            'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
         ];
     }
 }

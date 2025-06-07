@@ -36,6 +36,7 @@ export interface User {
     id: number;
     email: string;
     email_verified_at: string | null;
+    is_active: boolean;
     profile: Profile;
     created_at: string;
     updated_at: string;
