@@ -18,7 +18,7 @@ class PasswordResetRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return ValidationRule
+     * @return array<string, array<int, ValidationRule|string>|ValidationRule|string>
      */
     public function rules(): array
     {

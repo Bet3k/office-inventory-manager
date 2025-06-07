@@ -39,6 +39,9 @@ class EmailVerificationPromptController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return back()->with('success', 'A new verification link has been sent to the email address you provided during registration.');
+        return back()->with(
+            'success',
+            'A new verification link has been sent to the email address you provided during registration.'
+        );
     }
 }

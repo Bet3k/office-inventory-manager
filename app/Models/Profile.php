@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Profile
+ *
  * @property string $id
  * @property string $user_id
  * @property string $first_name

@@ -5,8 +5,11 @@ import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
+type ForgotPasswordForm = {
+    email: string;
+};
 export default function ForgotPassword() {
-    const { data, setData, post, processing, reset } = useForm<Required<{ email: string }>>({
+    const { data, setData, post, processing, reset } = useForm<Required<ForgotPasswordForm>>({
         email: '',
     });
 
