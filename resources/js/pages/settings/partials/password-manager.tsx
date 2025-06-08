@@ -36,8 +36,8 @@ function PasswordManager() {
         });
     };
     return (
-        <div className="flex w-full items-center justify-center p-4">
-            <Card className="w-full md:w-1/2">
+        <div className="flex w-full items-center justify-center">
+            <Card className="w-full">
                 <form onSubmit={handelPasswordChange} className="w-full space-y-6">
                     <CardHeader>
                         <CardTitle>Password Manager</CardTitle>

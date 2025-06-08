@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\PasswordManagerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SettingsController;
 
 Route::middleware('auth')->group(function () {
@@ -18,4 +19,10 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/password-update', [PasswordManagerController::class, 'update'])
         ->name('password.update');
+
+    Route::delete('/sessions/{session}', [SessionController::class, 'logoutCurrent'])
+        ->name('sessions.destroy');
+
+    Route::delete('/end-all-sessions', [SessionController::class, 'logoutAll'])
+        ->name('sessions.end.all');
 });

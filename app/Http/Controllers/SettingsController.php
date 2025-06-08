@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Dtos\SessionDto;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class SettingsController extends Controller
 {
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return Inertia::render('settings/index');
+        /** @var User $user */
+        $user = $request->user();
+
+        $currentSessionId = session()->getId();
+
+        $sessions = $user->sessions()->get();
+
+        return Inertia::render('settings/index', [
+            'sessions' => SessionDto::fromCollection($sessions, $currentSessionId),
+        ]);
     }
 }
