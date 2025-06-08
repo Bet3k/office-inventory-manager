@@ -1,18 +1,18 @@
 import { useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler, useRef } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
 import HeadingSmall from '@/components/heading-small';
-
-import { DialogDrawer } from '@/components/dialog-drawer';
 import LoadingButton from '@/components/loading-button';
 import PasswordInputWithError from '@/components/password-input-with-error';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { SharedData } from '@/types';
 
 export default function DeleteProfile() {
     const { auth } = usePage<SharedData>().props;
+    const [dialogOpen, setDialogOpen] = useState(false);
     const passwordInput = useRef<HTMLInputElement>(null);
     const {
         data,
@@ -20,7 +20,6 @@ export default function DeleteProfile() {
         delete: destroy,
         processing,
         reset,
-        clearErrors,
     } = useForm<
         Required<{
             password: string;
@@ -49,13 +48,17 @@ export default function DeleteProfile() {
                         <p className="mb-4 text-sm">Please proceed with caution, this cannot be undone.</p>
                     </div>
                     <div className="flex justify-end">
-                        <DialogDrawer
-                            title="Delete account"
-                            description="Once deleted, all your data will be permanently lost."
-                            triggerText="Delete account"
-                            btnType="destructive"
-                        >
-                            {({ close }) => (
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="destructive">Delete Account</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                    <DialogDescription>
+                                        This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+                                    </DialogDescription>
+                                </DialogHeader>
                                 <form onSubmit={deleteUser} className="space-y-6">
                                     <div className="grid gap-2">
                                         <PasswordInputWithError
@@ -72,22 +75,14 @@ export default function DeleteProfile() {
                                     </div>
 
                                     <div className="flex justify-end gap-2 pt-4">
-                                        <Button
-                                            type="button"
-                                            variant="secondary"
-                                            onClick={() => {
-                                                close();
-                                                clearErrors();
-                                                reset();
-                                            }}
-                                        >
+                                        <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                             Cancel
                                         </Button>
                                         <LoadingButton processing={processing} text="Delete Account" destructive />
                                     </div>
                                 </form>
-                            )}
-                        </DialogDrawer>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
             </CardContent>

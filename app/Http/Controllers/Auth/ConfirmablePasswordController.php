@@ -40,6 +40,13 @@ class ConfirmablePasswordController extends Controller
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $referer = url()->previous();
+        $refererName = app('router')->getRoutes()->match(Request::create($referer))->getName();
+
+        $intended = $refererName === 'settings.create'
+            ? route('settings.create')
+            : route('dashboard', absolute: false);
+
+        return redirect()->intended($intended);
     }
 }

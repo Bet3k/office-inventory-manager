@@ -11,7 +11,7 @@ import { Link, Lock, Monitor, ShieldCheck } from 'lucide-react';
 
 export default function Index() {
     const pageProps = usePage().props;
-    const sessions = pageProps.sessions as Session;
+    const sessions = pageProps.sessions as Session[];
 
     const breadcrumbs: BreadcrumbItem[] = [
         {

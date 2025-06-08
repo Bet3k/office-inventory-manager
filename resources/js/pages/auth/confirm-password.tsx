@@ -17,7 +17,7 @@ export default function ConfirmPassword() {
         });
     };
     return (
-        <Layout title="Password COnfirmation" description="Entrer your password to confirm your identity">
+        <Layout title="Password Confirmation" description="Entrer your password to confirm your identity">
             <Head title="confirm-password" />
 
             <form onSubmit={handelSubmit} className="flex flex-col gap-6">
@@ -37,7 +37,7 @@ export default function ConfirmPassword() {
                                 placeholder="••••••••"
                             />
                         </div>
-                        <LoadingButton processing={processing} text="Log in" tabIndex={4} fullWidth={true} />
+                        <LoadingButton processing={processing} text="Continue" tabIndex={4} fullWidth={true} />
                     </div>
                 </div>
             </form>

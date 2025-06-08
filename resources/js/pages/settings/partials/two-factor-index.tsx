@@ -1,7 +1,12 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import EnableTwoFactorAuth from '@/pages/settings/partials/enable-two-factor-auth';
+import { SharedData } from '@/types';
+import { usePage } from '@inertiajs/react';
 
 function TwoFactorIndex() {
+    const pageProps = usePage<SharedData>().props;
+    const recentlyConfirmedPassword = pageProps.recentlyConfirmedPassword as boolean;
+    const twoFactorEnabled: boolean = pageProps.twoFactorEnabled as boolean;
     return (
         <div className="flex w-full items-center justify-center">
             <Card className="w-full">
@@ -11,11 +16,10 @@ function TwoFactorIndex() {
                         <CardDescription>Two-Factor Authentication for extra security.</CardDescription>
                     </CardHeader>
                     <CardContent className="flex justify-center">
-                        <div className="grid w-full grid-cols-1 gap-4 md:w-1/2"></div>
+                        <div className="grid w-full grid-cols-1 gap-4 md:w-1/2">
+                            {twoFactorEnabled ? <h1>deactivate</h1> : <EnableTwoFactorAuth recentlyConfirmedPassword={recentlyConfirmedPassword} />}
+                        </div>
                     </CardContent>
-                    <CardFooter className="flex items-center justify-end">
-                        <Button>Save</Button>
-                    </CardFooter>
                 </form>
             </Card>
         </div>
