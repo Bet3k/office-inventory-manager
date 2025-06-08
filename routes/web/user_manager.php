@@ -25,4 +25,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/end-all-sessions', [SessionController::class, 'logoutAll'])
         ->name('sessions.end.all');
+
+    Route::put('/settings/two-factor-authentication-recovery-codes', [SettingsController::class, 'update'])
+        ->name('two-factor-authentication-recovery-codes.update');
 });

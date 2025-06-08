@@ -14,7 +14,7 @@ function RecoveryCodes({ downloadedCode }: { downloadedCode: boolean }) {
 
     const handleGenerateTwoFactorRecoveryCodes = () => {
         axios.post('/user/two-factor-recovery-codes').then(() => {
-            router.put(route('two-factor-authentication.update'), {
+            router.put(route('two-factor-authentication-recovery-codes.update'), {
                 downloaded_codes: false,
             });
             handleGetTwoFactorRecoveryCodes(); // Refresh the recovery codes post-request does not return the new codes
@@ -37,9 +37,17 @@ function RecoveryCodes({ downloadedCode }: { downloadedCode: boolean }) {
         document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
 
-        router.put(route('two-factor-authentication.update'), {
-            downloaded_codes: true,
-        });
+        router.put(
+            route('two-factor-authentication-recovery-codes.update'),
+            {
+                downloaded_codes: true,
+            },
+            {
+                onSuccess: () => {
+                    router.get(route('settings.create'), {}, { only: ['auth'] });
+                },
+            },
+        );
     };
 
     return (
@@ -58,8 +66,12 @@ function RecoveryCodes({ downloadedCode }: { downloadedCode: boolean }) {
             )}
 
             <div className="flex items-center justify-center gap-2">
-                {!downloadedCode && <Button onClick={handleDownloadCodes}>Download Codes</Button>}
-                <Button variant="outline" onClick={handleGenerateTwoFactorRecoveryCodes}>
+                {!downloadedCode && (
+                    <Button type="button" onClick={handleDownloadCodes}>
+                        Download Codes
+                    </Button>
+                )}
+                <Button type="button" variant="outline" onClick={handleGenerateTwoFactorRecoveryCodes}>
                     Generate New Codes
                 </Button>
             </div>
