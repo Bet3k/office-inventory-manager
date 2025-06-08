@@ -6,10 +6,17 @@ import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedPassword: boolean }) {
+function DisableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedPassword: boolean }) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const passwordInput = useRef<HTMLInputElement>(null);
-    const { post, processing, setData, data, reset, clearErrors } = useForm<
+    const {
+        delete: destroy,
+        processing,
+        setData,
+        data,
+        reset,
+        clearErrors,
+    } = useForm<
         Required<{
             password: string;
         }>
@@ -20,17 +27,17 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
 
         if (!recentlyConfirmedPassword) {
             // First confirm the password
-            post(route('password.confirm'), {
+            destroy(route('password.confirm'), {
                 preserveScroll: true,
                 onSuccess: () => {
                     // Then enable 2FA
-                    post(route('two-factor.enable'), {
+                    destroy(route('two-factor.disable'), {
                         preserveScroll: true,
                         onSuccess: () => {
                             clearErrors();
                             setDialogOpen(false);
                             toast.success('Success', {
-                                description: 'Two-Factor Authentication activated.',
+                                description: 'Two-Factor Authentication de-activated.',
                             });
                         },
                     });
@@ -42,31 +49,30 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
             });
         } else {
             // If the password is already confirmed, enable 2FA
-            post(route('two-factor.enable'), {
+            destroy(route('two-factor.disable'), {
                 preserveScroll: true,
                 onSuccess: () => {
                     setDialogOpen(false);
                     toast.success('Success', {
-                        description: 'Two-Factor Authentication activated.',
+                        description: 'Two-Factor Authentication de-activated.',
                     });
                 },
             });
         }
     };
-
     return (
         <div className="flex items-center justify-center">
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                    <Button>Activate Two Factor Authentication</Button>
+                    <Button variant="destructive">De-Activate Two Factor Authentication</Button>
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>You are about to activate Two-Factor Authentication</DialogTitle>
+                        <DialogTitle>You are about to de-activate Two-Factor Authentication</DialogTitle>
                         <DialogDescription>
                             This is recommended for your account security.{' '}
                             {!recentlyConfirmedPassword && (
-                                <>Please enter your password to confirm you would like to activate Two-Factor Authentication.</>
+                                <>Please enter your password to confirm you would like to de-activate Two-Factor Authentication.</>
                             )}
                         </DialogDescription>
                     </DialogHeader>
@@ -89,7 +95,7 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
                             <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                 Cancel
                             </Button>
-                            <LoadingButton processing={processing} text="Activate" />
+                            <LoadingButton destructive={true} processing={processing} text="De-Activate" />
                         </div>
                     </form>
                 </DialogContent>
@@ -98,4 +104,4 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
     );
 }
 
-export default EnableTwoFactorAuth;
+export default DisableTwoFactorAuth;
