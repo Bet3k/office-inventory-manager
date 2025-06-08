@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Actions\Auth\NewPasswordAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\NewPasswordRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class NewPasswordController extends Controller
+class PasswordManagerController extends Controller
 {
     /**
      * Show the password-reset page.
@@ -52,10 +54,25 @@ class NewPasswordController extends Controller
         }
 
         if ($record) {
-            $action->execute($request, $record);
+            /** @var User $user */
+            $user = User::query()->findOrFail($record->user_id);
+
+            $action->execute($request, $user);
+
+            $record->delete();
         }
 
         return to_route('login')
             ->with('success', 'Password reset successfully.');
+    }
+
+    public function update(ChangePasswordRequest $request, NewPasswordAction $action): RedirectResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $action->execute($request, $user);
+
+        return back()->with('success', 'Password changed successfully.');
     }
 }

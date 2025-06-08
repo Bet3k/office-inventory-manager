@@ -57,10 +57,12 @@ export function NavActions() {
                                             </Link>
                                         </SidebarMenuItem>
                                         <SidebarMenuItem>
-                                            <SidebarMenuButton>
-                                                <Settings2 className="text-muted-foreground" />
-                                                <span>Settings</span>
-                                            </SidebarMenuButton>
+                                            <Link className="w-full" href={route('settings.create')}>
+                                                <SidebarMenuButton>
+                                                    <Settings2 className="text-muted-foreground" />
+                                                    <span>Settings</span>
+                                                </SidebarMenuButton>
+                                            </Link>
                                         </SidebarMenuItem>
                                         <SidebarMenuItem>
                                             <Link className="w-full" method="post" href={route('logout')} as="button">

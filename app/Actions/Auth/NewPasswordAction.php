@@ -51,17 +51,10 @@ class NewPasswordAction
     /**
      * Here we will attempt to reset the user's password.
      */
-    public function execute(Request $request, PasswordResetToken $record): void
+    public function execute(Request $request, User $user): void
     {
-        /** @var User $user */
-        $user = User::query()->findOrFail($record->user_id);
-
-        $password = $request->string('password')->value();
-
         $user->update([
-            'password' => Hash::make($password),
+            'password' => Hash::make($request->string('password')->value()),
         ]);
-
-        $record->delete();
     }
 }

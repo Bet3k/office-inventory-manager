@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordManagerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])
@@ -10,4 +12,10 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile/{profile}', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    Route::get('/settings', [SettingsController::class, 'create'])
+        ->name('settings.create');
+
+    Route::put('/password-update', [PasswordManagerController::class, 'update'])
+        ->name('password.update');
 });

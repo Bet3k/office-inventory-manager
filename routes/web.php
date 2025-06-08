@@ -9,6 +9,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__ . '/web/profile.php';
+require __DIR__.'/web/user_manager.php';
 
 require __DIR__ . '/web/auth.php';

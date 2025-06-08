@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordManagerController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 
@@ -26,9 +26,9 @@ Route::middleware('guest')->group(function () {
         ->name('forgot-password.store')
         ->middleware(['throttle:5,1']);
 
-    Route::get('reset-password/{token}/{id}', [NewPasswordController::class, 'create'])
+    Route::get('reset-password/{token}/{id}', [PasswordManagerController::class, 'create'])
         ->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('reset-password', [PasswordManagerController::class, 'store'])
         ->name('password.store')
         ->middleware(['throttle:5,1']);
 });
