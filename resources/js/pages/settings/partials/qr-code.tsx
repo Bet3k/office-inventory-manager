@@ -10,7 +10,7 @@ function QrCode({ twoFactorEnabled, setupCode }: { twoFactorEnabled: boolean; se
     /**
      * Fetches the QR code SVG for two-factor authentication.
      * This function is called when the component mounts or when the `twoFactorEnabled` prop changes.
-     * It uses Axios to make a GET request to the server endpoint '/user/two-factor-qr-code' because inertia response
+     * It uses Axios to make a GET request to the server endpoint '/user/two-factor-qr-code' because Inertia
      * does not handle JSON responses.
      * */
     const handleGetTwoFactorQRCode = () => {

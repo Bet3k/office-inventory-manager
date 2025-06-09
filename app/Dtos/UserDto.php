@@ -25,7 +25,16 @@ readonly class UserDto
     /**
      * Convert the DTO to an array representation.
      *
-     * @return array<string, mixed>
+     * @return array{
+     *      id: string,
+     *      email: string,
+     *      email_verified_at: Carbon|null,
+     *      two_factor_confirmed_at: Carbon|null,
+     *      downloaded_codes: bool,
+     *      is_active: bool,
+     *      last_login_at: Carbon|null,
+     *      profile: array<string, string|int|null>
+     * }
      */
     public function toArray(): array
     {

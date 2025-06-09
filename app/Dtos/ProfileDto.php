@@ -32,7 +32,13 @@ readonly class ProfileDto
     /**
      * Convert the DTO to an array representation.
      *
-     * @return array<string, mixed>
+     * @return array{
+     *      id: string,
+     *      first_name: string,
+     *      last_name: string,
+     *      gender: string|null,
+     *      date_of_birth: string|null,
+     * }
      */
     public function toArray(): array
     {

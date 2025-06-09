@@ -11,6 +11,7 @@ function DisableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmed
     const passwordInput = useRef<HTMLInputElement>(null);
     const {
         delete: destroy,
+        post,
         processing,
         setData,
         data,
@@ -27,7 +28,7 @@ function DisableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmed
 
         if (!recentlyConfirmedPassword) {
             // First confirm the password
-            destroy(route('password.confirm'), {
+            post(route('password.confirm'), {
                 preserveScroll: true,
                 onSuccess: () => {
                     // Then enable 2FA

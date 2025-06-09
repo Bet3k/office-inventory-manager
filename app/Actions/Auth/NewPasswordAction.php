@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Auth;
 
 use App\Models\PasswordResetToken;
@@ -22,10 +24,6 @@ class NewPasswordAction
 
     /**
      * Validate the token and check if it's expired
-     *
-     * @param PasswordResetToken|null $record
-     *
-     * @param string $token
      *
      * @return array<int|string>|null Returns null if valid, or an error array if invalid
      */

@@ -8,11 +8,16 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordManagerController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
 
     Route::get('/', [LoginController::class, 'create'])
         ->name('login');
+
+    Route::get('/two-factor-challenge', function () {
+        return Inertia::render('auth/two-factor-challenge');
+    })->name('two-factor.login');
 
     Route::get('/register', [RegisterUserController::class, 'create'])
         ->name('register.create');

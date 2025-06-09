@@ -6,19 +6,30 @@ import { useEffect, useState } from 'react';
 function RecoveryCodes({ downloadedCode }: { downloadedCode: boolean }) {
     const [recoveryCodes, setRecoveryCodes] = useState<string[] | null>(null);
 
+    /**
+     * Uses Axios to make a GET request to the server endpoint '/user/two-factor-recovery-codes'
+     * because Inertia does not handle JSON responses.
+     * */
+
     const handleGetTwoFactorRecoveryCodes = () => {
         axios.get('/user/two-factor-recovery-codes').then((response) => {
-            setRecoveryCodes(response.data); // Update the ref's value
+            setRecoveryCodes(response.data);
         });
     };
 
     const handleGenerateTwoFactorRecoveryCodes = () => {
-        axios.post('/user/two-factor-recovery-codes').then(() => {
-            router.put(route('two-factor-authentication-recovery-codes.update'), {
-                downloaded_codes: false,
-            });
-            handleGetTwoFactorRecoveryCodes(); // Refresh the recovery codes post-request does not return the new codes
-        });
+        router.post(
+            '/user/two-factor-recovery-codes',
+            {},
+            {
+                onSuccess: () => {
+                    router.put(route('two-factor-authentication-recovery-codes.update'), {
+                        downloaded_codes: false,
+                    });
+                    handleGetTwoFactorRecoveryCodes();
+                },
+            },
+        );
     };
 
     useEffect(() => {
@@ -37,17 +48,9 @@ function RecoveryCodes({ downloadedCode }: { downloadedCode: boolean }) {
         document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
 
-        router.put(
-            route('two-factor-authentication-recovery-codes.update'),
-            {
-                downloaded_codes: true,
-            },
-            {
-                onSuccess: () => {
-                    router.get(route('settings.create'), {}, { only: ['auth'] });
-                },
-            },
-        );
+        router.put(route('two-factor-authentication-recovery-codes.update'), {
+            downloaded_codes: true,
+        });
     };
 
     return (

@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Session
+ * App\Models\UserSession
  *
- * @property Carbon $last_activity
+ * @property int $last_activity
  *
  * @property-read User $user
  *

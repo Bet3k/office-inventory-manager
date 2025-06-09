@@ -48,7 +48,7 @@ export default function DeleteProfile() {
                         <p className="mb-4 text-sm">Please proceed with caution, this cannot be undone.</p>
                     </div>
                     <div className="flex justify-end">
-                        <Dialog>
+                        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button variant="destructive">Delete Account</Button>
                             </DialogTrigger>

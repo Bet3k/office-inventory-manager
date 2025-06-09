@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Dtos;
 
 use App\Models\UserSession;
@@ -23,9 +25,21 @@ class SessionDto
     }
 
     /**
-     * @param Collection<int, UserSession> $sessions
+     * @param  Collection<int, UserSession>  $sessions
      *
-     * @return array<int, array<string, mixed>>
+     * @return array<int, array{
+     *     id: string,
+     *     payload: string,
+     *     user_agent: string,
+     *     ip_address: string,
+     *     user_id: string,
+     *     device: string,
+     *     platform: string,
+     *     browser: string,
+     *     last_activity: string,
+     *     last_active: string,
+     *     is_current: bool
+     * }>
      */
     public static function fromCollection(Collection $sessions, string $currentSessionId): array
     {
@@ -43,7 +57,17 @@ class SessionDto
     /**
      * Convert the DTO to an array representation.
      *
-     * @return array<string, mixed>
+     * @return array{
+     *      id: string,
+     *      payload: string,
+     *      user_agent: string,
+     *      ip_address: string,
+     *      user_id: string,
+     *      device: string,
+     *      platform: string,
+     *      browser: string,
+     *      last_activity: string,
+     * }
      */
     public function toArray(): array
     {
