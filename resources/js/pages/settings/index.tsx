@@ -12,6 +12,7 @@ import { Link, Lock, Monitor, ShieldCheck } from 'lucide-react';
 export default function Index() {
     const pageProps = usePage().props;
     const sessions = pageProps.sessions as Session[];
+    const linkAuth = pageProps.linkAuth as boolean;
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -29,7 +30,7 @@ export default function Index() {
             <Head title="Settings" />
 
             <div className="flex w-full items-center justify-center p-4">
-                <Tabs defaultValue="password" className="w-full md:w-1/2">
+                <Tabs defaultValue={linkAuth ? 'connectedAccounts' : 'password'} className="w-full md:w-1/2">
                     <TabsList className="grid grid-cols-4">
                         <TabsTrigger value="password">
                             <Lock className="h-4 w-4 md:hidden" />

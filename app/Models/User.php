@@ -36,6 +36,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $updated_at
  *
  * @property-read Profile $profile
+ * @property-read ConnectedAccount $connectedAccounts
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -83,6 +84,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sessions(): HasMany
     {
         return $this->hasMany(UserSession::class);
+    }
+
+    /**
+     * @return HasMany<ConnectedAccount, $this>
+     */
+    public function connectedAccounts(): HasMany
+    {
+        return $this->hasMany(ConnectedAccount::class);
     }
 
     /**

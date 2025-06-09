@@ -40,6 +40,17 @@ export interface User {
     downloaded_codes: boolean;
     is_active: boolean;
     profile: Profile;
+    connected_accounts: ConnectedAccount[];
+    created_at: string;
+    updated_at: string;
+
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface ConnectedAccount {
+    id: string;
+    identifier: string;
+    service: string;
     created_at: string;
     updated_at: string;
 

@@ -36,7 +36,7 @@ export default function LoginPage() {
             <form onSubmit={handleLogin} className="flex flex-col gap-6">
                 <div className="grid gap-6">
                     <div className="flex flex-col gap-4">
-                        <Button variant="outline" className="w-full">
+                        <Button variant="outline" className="w-full" type="button" onClick={() => (window.location.href = route('google.redirect'))}>
                             <FaGoogle />
                             Login with Google
                         </Button>

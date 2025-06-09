@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordManagerController;
@@ -18,6 +19,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/two-factor-challenge', function () {
         return Inertia::render('auth/two-factor-challenge');
     })->name('two-factor.login');
+
+    Route::get('/google/redirect', [GoogleAuthController::class, 'redirectToGoogle'])
+        ->name('google.redirect');
 
     Route::get('/register', [RegisterUserController::class, 'create'])
         ->name('register.create');

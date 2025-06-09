@@ -31,6 +31,8 @@ class SettingsController extends Controller
             'recentlyConfirmedPassword' => $recentlyConfirmed,
             'twoFactorEnabled' => isset($user->two_factor_secret),
             'setupCode' => $user->two_factor_secret ? decrypt($user->two_factor_secret) : '',
+            'connectedAccounts' => $user->connectedAccounts,
+            'linkAuth' => session()->pull('linkAuth'),
         ]);
     }
 
