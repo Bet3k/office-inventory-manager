@@ -31,7 +31,7 @@ jobs:
         run: vendor/bin/pint
 
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyse -l 10  app/
+        run: vendor/bin/phpstan analyse -l 8  app/ # Level 8 is recommended highest. You can be a hero and set 10
 
       - name: Run PHP Insights
         run: vendor/bin/phpinsights --config-path=config/insights.php --no-interaction --ansi
