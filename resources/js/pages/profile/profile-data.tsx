@@ -52,6 +52,7 @@ function ProfileData() {
                                     type="text"
                                     required
                                     autoFocus
+                                    tabIndex={1}
                                     autoComplete="first_name"
                                     value={data.first_name}
                                     onChange={(e) => setData('first_name', e.target.value)}
@@ -65,6 +66,7 @@ function ProfileData() {
                                     name="last_name"
                                     type="test"
                                     required
+                                    tabIndex={2}
                                     autoComplete="last_name"
                                     value={data.last_name}
                                     onChange={(e) => setData('last_name', e.target.value)}

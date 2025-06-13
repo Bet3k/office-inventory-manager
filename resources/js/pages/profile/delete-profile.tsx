@@ -66,11 +66,10 @@ export default function DeleteProfile() {
                                             name="password"
                                             forgotPassword={false}
                                             required
-                                            tabIndex={2}
+                                            tabIndex={1}
                                             autoComplete="password"
                                             value={data.password}
                                             onChange={(e) => setData('password', e.target.value)}
-                                            placeholder="••••••••"
                                         />
                                     </div>
 
@@ -78,7 +77,7 @@ export default function DeleteProfile() {
                                         <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                             Cancel
                                         </Button>
-                                        <LoadingButton processing={processing} text="Delete Account" destructive />
+                                        <LoadingButton processing={processing} text="Delete Account" destructive tabIndex={2} />
                                     </div>
                                 </form>
                             </DialogContent>

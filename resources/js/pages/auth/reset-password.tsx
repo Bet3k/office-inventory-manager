@@ -43,11 +43,10 @@ export default function ResetPassword({ token, id }: ResetPasswordProps) {
                             name="password"
                             forgotPassword={false}
                             required
-                            tabIndex={2}
+                            tabIndex={1}
                             autoComplete="password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            placeholder="••••••••"
                         />
                     </div>
 
@@ -61,15 +60,14 @@ export default function ResetPassword({ token, id }: ResetPasswordProps) {
                             autoComplete="password_confirmation"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
-                            placeholder="••••••••"
                         />
                     </div>
-                    <LoadingButton processing={processing} text="Save" tabIndex={5} fullWidth={true} />
+                    <LoadingButton processing={processing} text="Save" tabIndex={3} fullWidth={true} />
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have an account?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
+                    <TextLink href={route('login')} tabIndex={4}>
                         Log in
                     </TextLink>
                 </div>

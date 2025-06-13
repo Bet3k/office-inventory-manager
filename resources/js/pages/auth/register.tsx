@@ -69,7 +69,6 @@ export default function Register() {
                             name="email"
                             type="email"
                             required
-                            autoFocus
                             tabIndex={3}
                             autoComplete="email"
                             value={data.email}
@@ -84,11 +83,10 @@ export default function Register() {
                             name="password"
                             forgotPassword={false}
                             required
-                            tabIndex={2}
+                            tabIndex={4}
                             autoComplete="password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            placeholder="••••••••"
                         />
                     </div>
 
@@ -98,19 +96,18 @@ export default function Register() {
                             name="password_confirmation"
                             forgotPassword={false}
                             required
-                            tabIndex={2}
+                            tabIndex={5}
                             autoComplete="password_confirmation"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
-                            placeholder="••••••••"
                         />
                     </div>
-                    <LoadingButton processing={processing} text="Register" tabIndex={5} fullWidth={true} />
+                    <LoadingButton processing={processing} text="Register" tabIndex={6} fullWidth={true} />
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have an account?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
+                    <TextLink href={route('login')} tabIndex={7}>
                         Log in
                     </TextLink>
                 </div>

@@ -30,14 +30,14 @@ export default function ConfirmPassword() {
                                 forgotPassword={false}
                                 forgotPasswordLink={route('forgot-password.create')}
                                 required
-                                tabIndex={2}
+                                autoFocus
+                                tabIndex={1}
                                 autoComplete="password"
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
-                                placeholder="••••••••"
                             />
                         </div>
-                        <LoadingButton processing={processing} text="Continue" tabIndex={4} fullWidth={true} />
+                        <LoadingButton processing={processing} text="Continue" tabIndex={2} fullWidth={true} />
                     </div>
                 </div>
             </form>

@@ -35,7 +35,7 @@ export default function AuthLayout({
                         <CardContent className="px-10 py-8">{children}</CardContent>
                     </Card>
                     <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-                        V0.0.1. Developed and maintained by <a href="#">Isaac</a>.
+                        V0.0.1. Developed and maintained by <a href="#">The Avengers</a>.
                     </div>
                 </div>
             </div>

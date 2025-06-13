@@ -59,6 +59,8 @@ function ConfirmTwoFactor() {
                                         setData('code', value);
                                     }
                                 }}
+                                autoFocus
+                                tabIndex={1}
                                 placeholder="Code"
                                 autoComplete="one-time-code"
                             />
@@ -69,7 +71,7 @@ function ConfirmTwoFactor() {
                             <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                 Cancel
                             </Button>
-                            <LoadingButton processing={processing} text="Confirm" />
+                            <LoadingButton processing={processing} text="Confirm" tabIndex={2} />
                         </div>
                     </form>
                 </DialogContent>

@@ -78,10 +78,11 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
                                     name="password"
                                     forgotPassword={false}
                                     required
+                                    autoFocus
+                                    tabIndex={1}
                                     autoComplete="current-password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                             </div>
                         )}
@@ -89,7 +90,7 @@ function EnableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmedP
                             <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                 Cancel
                             </Button>
-                            <LoadingButton processing={processing} text="Activate" />
+                            <LoadingButton processing={processing} text="Activate" tabIndex={2} />
                         </div>
                     </form>
                 </DialogContent>

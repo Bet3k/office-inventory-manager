@@ -35,6 +35,7 @@ export default function TwoFactorChallenge() {
                             autoComplete="code"
                             value={data.code}
                             autoFocus
+                            tabIndex={1}
                             className={errors.code && 'border-red-500 focus:border-red-500 focus:ring-red-500'}
                             onChange={(e) => {
                                 // Only allow numeric input
@@ -47,7 +48,7 @@ export default function TwoFactorChallenge() {
                     </div>
 
                     <div className="flex items-center">
-                        <LoadingButton processing={processing} text="Continue" fullWidth={true} />
+                        <LoadingButton processing={processing} text="Continue" fullWidth={true} tabIndex={2} />
                     </div>
                 </div>
             </form>

@@ -70,7 +70,6 @@ export default function LoginPage() {
                                 autoComplete="password"
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
-                                placeholder="••••••••"
                             />
                         </div>
                         <div className="flex items-center space-x-3">

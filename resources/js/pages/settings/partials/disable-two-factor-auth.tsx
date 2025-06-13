@@ -85,10 +85,11 @@ function DisableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmed
                                     name="password"
                                     forgotPassword={false}
                                     required
+                                    autoFocus
+                                    tabIndex={1}
                                     autoComplete="current-password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                             </div>
                         )}
@@ -96,7 +97,7 @@ function DisableTwoFactorAuth({ recentlyConfirmedPassword }: { recentlyConfirmed
                             <Button type="button" variant="secondary" onClick={() => setDialogOpen(false)}>
                                 Cancel
                             </Button>
-                            <LoadingButton destructive={true} processing={processing} text="De-Activate" />
+                            <LoadingButton destructive={true} processing={processing} text="De-Activate" tabIndex={2} />
                         </div>
                     </form>
                 </DialogContent>

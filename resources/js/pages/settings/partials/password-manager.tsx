@@ -51,11 +51,11 @@ function PasswordManager() {
                                     name="current_password"
                                     forgotPassword={false}
                                     required
+                                    autoFocus
                                     tabIndex={1}
                                     autoComplete="current_password"
                                     value={data.current_password}
                                     onChange={(e) => setData('current_password', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                             </div>
 
@@ -69,7 +69,6 @@ function PasswordManager() {
                                     autoComplete="password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                             </div>
 
@@ -83,13 +82,12 @@ function PasswordManager() {
                                     autoComplete="password_confirmation"
                                     value={data.password_confirmation}
                                     onChange={(e) => setData('password_confirmation', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                             </div>
                         </div>
                     </CardContent>
                     <CardFooter className="flex items-center justify-end">
-                        <LoadingButton processing={processing} text="Update Profile" />
+                        <LoadingButton processing={processing} text="Update Profile" tabIndex={4} />
                     </CardFooter>
                 </form>
             </Card>
