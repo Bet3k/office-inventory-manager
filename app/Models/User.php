@@ -7,6 +7,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,6 +38,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  *
  * @property-read Profile $profile
  * @property-read ConnectedAccount $connectedAccounts
+ * @property-read Collection<int, UserSession> $sessions
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

@@ -20,14 +20,10 @@ class SettingsController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        $currentSessionId = session()->getId();
-
-        $sessions = $user->sessions()->get();
-
         $recentlyConfirmed = time() - session('auth.password_confirmed_at', 0) < config('auth.password_timeout');
 
         return Inertia::render('settings/index', [
-            'sessions' => SessionDto::fromCollection($sessions, $currentSessionId),
+            'sessions' => SessionDto::fromCollection($user->sessions, session()->getId()),
             'recentlyConfirmedPassword' => $recentlyConfirmed,
             'twoFactorEnabled' => isset($user->two_factor_secret),
             'setupCode' => $user->two_factor_secret ? decrypt($user->two_factor_secret) : '',
