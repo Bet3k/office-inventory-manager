@@ -31,7 +31,7 @@ export default function AppLayout({ children, breadcrumbs }: AppLayoutProps) {
             <SidebarInset>
                 <Header breadcrumbs={breadcrumbs} />
                 <Toaster position="top-right" expand={true} richColors />
-                {children}
+                <div className="mt-3 mr-2">{children}</div>
             </SidebarInset>
         </SidebarProvider>
     );
