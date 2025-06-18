@@ -10,18 +10,27 @@ use Inertia\Testing\AssertableInertia as Assert;
 uses(RefreshDatabase::class);
 
 test('email verification screen can be rendered', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory([
+        'email' => 'test@example.com'
+    ])->unverified()->create();
 
-    $response = $this->actingAs($user)->get('/verify-email');
-
-    $response->assertInertia(
-        fn (Assert $page) => $page
-        ->component('auth/verify-email')
-    );
+    $this
+        ->actingAs($user)
+        ->followingRedirects()
+        ->get('/verify-email')
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('auth/verify-email')
+                ->where('auth.user.email', 'test@example.com')
+                ->where('auth.user.email_verified_at', null)
+        );
 });
 
 test('email can be verified', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory([
+        'email' => 'test@example.com'
+    ])->unverified()->create();
 
     Event::fake();
 
@@ -39,7 +48,9 @@ test('email can be verified', function () {
 });
 
 test('email is not verified with invalid hash', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory([
+        'email' => 'test@example.com'
+    ])->unverified()->create();
 
     $verificationUrl = URL::temporarySignedRoute(
         'verification.verify',
