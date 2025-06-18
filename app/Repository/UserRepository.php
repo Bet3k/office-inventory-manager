@@ -15,7 +15,7 @@ class UserRepository
     /**
      * Create a new profile.
      *
-     * @param  array<string, string>  $data  User data.
+     * @param  array<string, string|bool>  $data  User data.
      */
     public function create(array $data): User
     {
