@@ -11,8 +11,14 @@
 |
 */
 
+use App\Models\User;
+use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
+use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
+use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
+use PragmaRX\Google2FA\Google2FA;
+
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -41,6 +47,34 @@ expect()->extend('toBeOne', function () {
 |
 */
 
+function createUser()
+{
+    return User::factory()->create([
+        'email' => 'john.doe@mail.com',
+        'password' => Hash::make('Password1#')
+    ]);
+}
+
+/**
+ * @throws IncompatibleWithGoogleAuthenticatorException
+ * @throws SecretKeyTooShortException
+ * @throws InvalidCharactersException
+ */
+function twoFactorUser()
+{
+    $google2fa = new Google2FA();
+    $secret = $google2fa->generateSecretKey();
+    $recoveryCodes = collect(range(1, 8))->map(function () {
+        return Str::random(10).'-'.Str::random(10);
+    })->all();
+
+    return User::factory()->create([
+        'password' => Hash::make('Password1#'),
+        'two_factor_secret' => Crypt::encrypt($secret),
+        'two_factor_recovery_codes' => Crypt::encrypt(json_encode($recoveryCodes)),
+        'two_factor_confirmed_at' => now(),
+    ]);
+}
 function something()
 {
     // ..

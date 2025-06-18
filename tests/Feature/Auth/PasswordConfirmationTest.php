@@ -1,22 +1,24 @@
 <?php
 
-use App\Models\User;
-
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use Inertia\Testing\AssertableInertia as Assert;
 
 test('confirm password screen can be rendered', function () {
-    $user = User::factory()->create();
+    $user = createUser();
 
-    $response = $this->actingAs($user)->get('/confirm-password');
-
-    $response->assertStatus(200);
+    $this
+        ->actingAs($user)
+        ->get(route('password.confirm'))
+        ->assertInertia(
+            fn (Assert $page) => $page
+            ->component('auth/confirm-password')
+        );
 });
 
 test('password can be confirmed', function () {
-    $user = User::factory()->create();
+    $user = createUser();
 
-    $response = $this->actingAs($user)->post('/confirm-password', [
-        'password' => 'password',
+    $response = $this->actingAs($user)->post(route('password-confirm.store'), [
+        'password' => 'Password1#',
     ]);
 
     $response->assertRedirect();
@@ -24,11 +26,20 @@ test('password can be confirmed', function () {
 });
 
 test('password is not confirmed with invalid password', function () {
-    $user = User::factory()->create();
+    $user = createUser();
 
-    $response = $this->actingAs($user)->post('/confirm-password', [
-        'password' => 'wrong-password',
-    ]);
+    $this->get(route('password.confirm'));
 
-    $response->assertSessionHasErrors();
+    $this
+        ->followingRedirects()
+        ->actingAs($user)
+        ->post(route('password-confirm.store'), [
+            'password' => 'wrong-password',
+        ])
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('auth/confirm-password')
+                ->has('errors')
+                ->where('errors.password', 'The provided password is incorrect.')
+        );
 });

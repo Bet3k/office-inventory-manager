@@ -1,4 +1,4 @@
-import { Archive, ChevronDown, ChevronRight, GalleryVerticalEnd, House, UserCog } from 'lucide-react';
+import { ChevronDown, ChevronRight, GalleryVerticalEnd, House, SquarePen, UserCog } from 'lucide-react';
 import * as React from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -50,8 +50,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 ],
             },
             {
-                title: 'Archive',
-                icon: Archive,
+                title: 'Change Log',
+                icon: SquarePen,
                 href: route('dashboard'),
                 isActive: currentRoute === 'dashboard',
                 items: [],
@@ -86,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 <Collapsible key={item.title} defaultOpen={isGroupActive(item)} className="group/collapsible">
                                     <SidebarMenuItem>
                                         <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton>
+                                            <SidebarMenuButton className={isGroupActive(item) ? 'bg-neutral-100' : ''}>
                                                 <item.icon className="mr-2" />
                                                 {item.title}
                                                 <ChevronRight className="ml-auto group-data-[state=open]/collapsible:hidden" />
