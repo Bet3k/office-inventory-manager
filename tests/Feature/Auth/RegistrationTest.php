@@ -7,7 +7,7 @@ test('registration screen can be rendered', function () {
         ->get(route('register.create'))
         ->assertInertia(
             fn (Assert $page) => $page
-        ->component('auth/register')
+            ->component('auth/register')
         );
 });
 

@@ -1,42 +1,46 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use Inertia\Testing\AssertableInertia as Assert;
 
 test('password can be updated', function () {
-    $user = User::factory()->create();
+    $user = createUser();
 
-    $response = $this
+    $this->actingAs($user)->get(route('settings.create'));
+
+    $this
+        ->followingRedirects()
         ->actingAs($user)
-        ->from('/settings/password')
-        ->put('/settings/password', [
-            'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+        ->put(route('password.update'), [
+            'current_password' => 'Password1#',
+            'password' => 'Password12#',
+            'password_confirmation' => 'Password12#',
+        ])
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('settings/index')
+        );
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/password');
-
-    expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
+    expect(Hash::check('Password12#', $user->refresh()->password))->toBeTrue();
 });
 
 test('correct password must be provided to update password', function () {
-    $user = User::factory()->create();
+    $user = createUser();
 
-    $response = $this
+    $this->actingAs($user)->get(route('settings.create'));
+
+    $this
+        ->followingRedirects()
         ->actingAs($user)
-        ->from('/settings/password')
-        ->put('/settings/password', [
-            'current_password' => 'wrong-password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrors('current_password')
-        ->assertRedirect('/settings/password');
+        ->put(route('password.update'), [
+            'current_password' => 'Password19#',
+            'password' => 'Password12#',
+            'password_confirmation' => 'Password12#',
+        ])
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('settings/index')
+                ->has('errors')
+                ->where('errors.current_password', 'The password is incorrect.')
+        );
 });
