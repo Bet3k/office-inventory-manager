@@ -49,7 +49,10 @@ expect()->extend('toBeOne', function () {
 
 function createUser()
 {
-    return User::factory()->create(['password' => Hash::make('Password1#')]);
+    return User::factory()->create([
+        'email' => 'john.doe@mail.com',
+        'password' => Hash::make('Password1#')
+    ]);
 }
 
 /**
