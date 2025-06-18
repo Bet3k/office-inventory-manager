@@ -1,11 +1,16 @@
 <?php
 
+use Inertia\Testing\AssertableInertia as Assert;
+
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
 
-    $response->assertStatus(200);
+    $response->assertInertia(
+        fn (Assert $page) => $page
+        ->component('auth/register')
+    );
 });
 
 test('new users can register', function () {

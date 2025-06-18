@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
@@ -11,7 +12,17 @@ test('profile page is displayed', function () {
         ->actingAs($user)
         ->get('/settings/profile');
 
-    $response->assertOk();
+    $response->assertInertia(
+        fn (Assert $page) => $page
+        ->component('settings/profile')
+        ->has(
+            'user',
+            fn (Assert $page) => $page
+            ->where('id', $user->id)
+            ->where('name', $user->name)
+            ->where('email', $user->email)
+        )
+    );
 });
 
 test('profile information can be updated', function () {
