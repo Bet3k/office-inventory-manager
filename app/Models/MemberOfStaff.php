@@ -1,34 +1,30 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
 use Carbon\Carbon;
-use Database\Factories\ProfileFactory;
+use Database\Factories\MemberOfStaffFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Profile
+ * App\Models\MemberStaff
  *
  * @property string $id
  * @property string $user_id
  * @property string $first_name
  * @property string $last_name
- * @property string $gender
  *
- * @property Carbon|null $date_of_birth
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
  * @property-read User $user
  */
-class Profile extends Model
+class MemberOfStaff extends Model
 {
-    /** @use HasFactory<ProfileFactory> */
+    /** @use HasFactory<MemberOfStaffFactory> */
     use HasFactory;
 
     use HasUuids;
@@ -37,8 +33,6 @@ class Profile extends Model
         'user_id',
         'first_name',
         'last_name',
-        'gender',
-        'date_of_birth',
     ];
 
     /**
@@ -47,12 +41,5 @@ class Profile extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'date_of_birth' => 'date',
-        ];
     }
 }

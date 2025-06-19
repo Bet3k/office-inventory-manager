@@ -1,5 +1,5 @@
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import AppLayout from '@/layouts/app-layout';
+import Layout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 
@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Dashboard() {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <Layout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <Card>
                 <CardHeader>
@@ -27,6 +27,6 @@ export default function Dashboard() {
                     <p>Card Footer</p>
                 </CardFooter>
             </Card>
-        </AppLayout>
+        </Layout>
     );
 }

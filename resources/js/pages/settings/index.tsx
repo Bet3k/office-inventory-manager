@@ -7,7 +7,7 @@ import TwoFactorIndex from '@/pages/settings/partials/two-factor-index';
 import { BreadcrumbItem } from '@/types';
 import { Session } from '@/types/sessions';
 import { Head, usePage } from '@inertiajs/react';
-import { Link, Lock, Monitor, ShieldCheck } from 'lucide-react';
+import { Lock, Monitor, ShieldCheck } from 'lucide-react';
 
 export default function Index() {
     const pageProps = usePage().props;
@@ -44,12 +44,12 @@ export default function Index() {
                                 <ShieldCheck /> Two-Factor Auth
                             </span>
                         </TabsTrigger>
-                        <TabsTrigger value="connectedAccounts">
+                        {/*<TabsTrigger value="connectedAccounts">
                             <Link className="h-4 w-4 md:hidden" />
                             <span className="hidden md:flex md:gap-2">
                                 <Link /> Connected Accounts
                             </span>
-                        </TabsTrigger>
+                        </TabsTrigger>*/}
                         <TabsTrigger value="sessions">
                             <Monitor className="h-4 w-4 md:hidden" />
                             <span className="hidden md:flex md:gap-2">

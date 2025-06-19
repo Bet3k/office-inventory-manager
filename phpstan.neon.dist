@@ -1,6 +1,8 @@
 parameters:
+    level: 8
     excludePaths:
         analyse:
             - tests
             - app/Http/Middleware
             - app/Providers
+            - database

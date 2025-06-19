@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordManagerController;
-use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Inertia\Inertia;
 
@@ -23,11 +22,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/google/redirect', [GoogleAuthController::class, 'redirectToGoogle'])
         ->name('google.redirect');
 
-    Route::get('/register', [RegisterUserController::class, 'create'])
+    /*Route::get('/register', [RegisterUserController::class, 'create'])
         ->name('register.create');
     Route::post('/register', [RegisterUserController::class, 'store'])
         ->name('register.store')
-        ->middleware(['throttle:5,1']);
+        ->middleware(['throttle:5,1']);*/
 
     Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
         ->name('forgot-password.create');
