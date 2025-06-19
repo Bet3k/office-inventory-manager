@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\UserSession;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
@@ -32,7 +34,14 @@ class SessionController extends Controller
             $s->delete();
         }
 
-        return back()
+        /** @var StatefulGuard $guard */
+        $guard = Auth::guard('web');
+        $guard->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return to_route('login')
             ->with('success', 'Session successfully logged out.');
     }
 }
