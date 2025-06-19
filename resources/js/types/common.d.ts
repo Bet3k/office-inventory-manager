@@ -4,3 +4,9 @@ export interface Flash {
     warning?: string | null;
     error?: string | null;
 }
+
+export interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
