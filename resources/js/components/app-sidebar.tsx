@@ -50,10 +50,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 ],
             },
             {
-                title: 'Change Log',
+                title: 'Members of Staff',
                 icon: SquarePen,
-                href: route('dashboard'),
-                isActive: currentRoute === 'dashboard',
+                href: route('member-of-staff.index'),
+                isActive: currentRoute === 'member-of-staff.index',
                 items: [],
             },
         ],

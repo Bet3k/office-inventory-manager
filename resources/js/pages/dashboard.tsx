@@ -1,4 +1,3 @@
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Layout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -14,7 +13,7 @@ export default function Dashboard() {
     return (
         <Layout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <Card>
+            {/*<Card>
                 <CardHeader>
                     <CardTitle>Card Title</CardTitle>
                     <CardDescription>Card Description</CardDescription>
@@ -26,7 +25,12 @@ export default function Dashboard() {
                 <CardFooter>
                     <p>Card Footer</p>
                 </CardFooter>
-            </Card>
+            </Card>*/}
+            <div className="flex flex-1 flex-col gap-4 p-4">
+                {Array.from({ length: 24 }).map((_, index) => (
+                    <div key={index} className="bg-muted/50 aspect-video h-12 w-full rounded-lg" />
+                ))}
+            </div>
         </Layout>
     );
 }

@@ -20,11 +20,10 @@ final class ListMembersOfStaffAction
      * Returns paginated, filtered list of members of staff
      *
      * @param  Request  $request
-     * @param  int  $perPage
      * @return LengthAwarePaginator<int, MemberOfStaff>
      */
-    public function execute(Request $request, int $perPage = 15): LengthAwarePaginator
+    public function execute(Request $request): LengthAwarePaginator
     {
-        return $this->memberOfStaffRepository->all($request, $perPage);
+        return $this->memberOfStaffRepository->all($request);
     }
 }

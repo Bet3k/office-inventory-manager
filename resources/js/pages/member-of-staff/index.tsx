@@ -1,8 +1,13 @@
 import Layout from '@/layouts/app-layout';
+import MembersOfStaffList from '@/pages/member-of-staff/members-of-staff-list';
 import type { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
+import { Head, usePage } from '@inertiajs/react';
 
-export default function index() {
+export default function Index() {
+    const pageProps = usePage().props;
+    const membersOfStaff = pageProps.membersOfStaff as PaginatedMembersOfStaffInterface;
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Members of Staff',
@@ -12,6 +17,7 @@ export default function index() {
     return (
         <Layout breadcrumbs={breadcrumbs}>
             <Head title="Members of Staff" />
+            <MembersOfStaffList membersOfStaff={membersOfStaff} />
         </Layout>
     );
 }
