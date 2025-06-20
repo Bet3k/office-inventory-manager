@@ -16,10 +16,10 @@ test('member of staff can be created', function () {
     $this
         ->actingAs($user)
         ->followingRedirects()
-        ->post(route('member-of-staff.store', [
+        ->post(route('member-of-staff.store'), [
             'first_name' => 'John',
             'last_name' => 'Doe',
-        ]))
+        ])
         ->assertInertia(
             fn (Assert $page) => $page
                 ->component('member-of-staff/index')
