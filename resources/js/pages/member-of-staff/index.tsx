@@ -11,7 +11,7 @@ export default function Index() {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Members of Staff',
-            href: '/dashboard',
+            href: route('member-of-staff.index'),
         },
     ];
     return (

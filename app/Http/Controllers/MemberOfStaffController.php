@@ -47,27 +47,29 @@ class MemberOfStaffController extends Controller
         }
     }
 
-    public function show(MemberOfStaff $memberStaff)
+    public function show(MemberOfStaff $memberOfStaff): Response
     {
-        $this->authorize('view', $memberStaff);
+        $this->authorize('view', $memberOfStaff);
 
-        return $memberStaff;
+        return Inertia::render('member-of-staff/staff-details', [
+            'memberOfStaff' => $memberOfStaff,
+        ]);
     }
 
     public function update(
         MemberOfStaffRequest $request,
-        MemberOfStaff $memberStaff,
+        MemberOfStaff $memberOfStaff,
         UpdateMemberOfStaffAction $action
     ): RedirectResponse {
-        $this->authorize('update', $memberStaff);
+        $this->authorize('update', $memberOfStaff);
 
         try {
-            $action->execute($request, $memberStaff);
+            $action->execute($request, $memberOfStaff);
             return back()->with('success', 'Member of staff updated successfully.');
         } catch (Throwable $e) {
             Log::error('Member of Staff update failed.', [
                 'exception' => $e,
-                'member_of_staff_id' => $memberStaff->id ?? null,
+                'member_of_staff_id' => $memberOfStaff->id ?? null,
                 'user_id' => $request->user()->id,
             ]);
             return back()->with('error', 'Failed to update member of staff. Please try again.');
@@ -76,18 +78,18 @@ class MemberOfStaffController extends Controller
 
     public function destroy(
         Request $request,
-        MemberOfStaff $memberStaff,
+        MemberOfStaff $memberOfStaff,
         DeleteMemberOfStaffAction $action
     ): RedirectResponse {
-        $this->authorize('delete', $memberStaff);
+        $this->authorize('delete', $memberOfStaff);
 
         try {
-            $action->execute($memberStaff);
+            $action->execute($memberOfStaff);
             return back()->with('success', 'Member of staff deleted successfully.');
         } catch (Throwable $e) {
             Log::error('Member of Staff deletion failed.', [
                 'exception' => $e,
-                'member_of_staff_id' => $memberStaff->id ?? null,
+                'member_of_staff_id' => $memberOfStaff->id ?? null,
                 'user_id' => $request->user()->id,
             ]);
             return back()->with('error', 'Failed to delete member of staff. Please try again.');

@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import CreateUpdateStaff from '@/pages/member-of-staff/partials/create-update-staff';
 import { MembersOfStaffInterface, MembersOfStaffInterfaceFilters, PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
-import { router, useForm, usePage } from '@inertiajs/react';
+import { Link, router, useForm, usePage } from '@inertiajs/react';
 import { X } from 'lucide-react';
 
 function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembersOfStaffInterface }) {
@@ -112,7 +112,12 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
                                 <TableCell className="font-medium">{memberOfStaff.first_name}</TableCell>
                                 <TableCell>{memberOfStaff.last_name}</TableCell>
                                 <TableCell>
-                                    <CreateUpdateStaff memberOfStaff={memberOfStaff} />
+                                    <Link
+                                        href={route('member-of-staff.show', memberOfStaff.id)}
+                                        className="text-sky-400 hover:text-sky-600 hover:underline"
+                                    >
+                                        View
+                                    </Link>
                                 </TableCell>
                             </TableRow>
                         ))}
