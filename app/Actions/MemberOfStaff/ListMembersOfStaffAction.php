@@ -7,7 +7,7 @@ use App\Repository\MemberOfStaffRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
-final class ListMembersOfStaffAction
+readonly class ListMembersOfStaffAction
 {
     private MemberOfStaffRepository $memberOfStaffRepository;
 
@@ -20,6 +20,7 @@ final class ListMembersOfStaffAction
      * Returns paginated, filtered list of members of staff
      *
      * @param  Request  $request
+     *
      * @return LengthAwarePaginator<int, MemberOfStaff>
      */
     public function execute(Request $request): LengthAwarePaginator

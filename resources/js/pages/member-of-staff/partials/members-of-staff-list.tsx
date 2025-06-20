@@ -3,6 +3,7 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CreateUpdateStaff from '@/pages/member-of-staff/partials/create-update-staff';
 import { MembersOfStaffInterface, MembersOfStaffInterfaceFilters, PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { X } from 'lucide-react';
@@ -35,12 +36,14 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
     return (
         <Card className="px-4 py-9">
             <CardHeader className="flex w-full flex-col">
-                <div className="flex w-full justify-between">
+                <div className="mb-3 flex w-full justify-between">
                     <div>
                         <CardTitle>Members of Staff</CardTitle>
                         <CardDescription>List of all active members of staff</CardDescription>
                     </div>
-                    <CardAction>Card Action</CardAction>
+                    <CardAction>
+                        <CreateUpdateStaff />
+                    </CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-between md:flex-row">
@@ -105,10 +108,12 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
                     </TableHeader>
                     <TableBody>
                         {membersOfStaff.data.map((memberOfStaff: MembersOfStaffInterface) => (
-                            <TableRow className="even:bg-muted">
+                            <TableRow key={memberOfStaff.id} className="even:bg-muted">
                                 <TableCell className="font-medium">{memberOfStaff.first_name}</TableCell>
                                 <TableCell>{memberOfStaff.last_name}</TableCell>
-                                <TableCell>View</TableCell>
+                                <TableCell>
+                                    <CreateUpdateStaff memberOfStaff={memberOfStaff} />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

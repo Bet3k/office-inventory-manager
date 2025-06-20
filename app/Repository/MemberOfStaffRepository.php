@@ -14,20 +14,21 @@ class MemberOfStaffRepository
      * Returns all member of staffs
      *
      * @param  Request  $request
+     *
      * @return LengthAwarePaginator<int, MemberOfStaff>
      */
     public function all(Request $request): LengthAwarePaginator
     {
         $query = MemberOfStaff::query();
 
-        if (!empty($request->name)) {
+        if ($request->filled('name')) {
             $query->where(function ($q) use ($request) {
-                $q->where('first_name', 'like', '%'.$request->name.'%')
-                    ->orWhere('last_name', 'like', '%'.$request->name.'%');
+                $q->where('first_name', 'like', '%'.$request->input('name').'%')
+                    ->orWhere('last_name', 'like', '%'.$request->input('name').'%');
             });
         }
 
-        return $query->paginate($request->per_page)->withQueryString();
+        return $query->paginate($request->input('per_page'))->withQueryString();
     }
 
     /**

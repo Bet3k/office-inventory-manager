@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
 
-final class CreateMemberOfStaffAction
+readonly class CreateMemberOfStaffAction
 {
     private MemberOfStaffRepository $memberOfStaffRepository;
     public function __construct(MemberOfStaffRepository $memberOfStaffRepository)

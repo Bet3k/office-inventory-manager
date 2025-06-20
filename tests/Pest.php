@@ -12,6 +12,7 @@
 */
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
 use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
 use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
@@ -74,8 +75,4 @@ function twoFactorUser()
         'two_factor_recovery_codes' => Crypt::encrypt(json_encode($recoveryCodes)),
         'two_factor_confirmed_at' => now(),
     ]);
-}
-function something()
-{
-    // ..
 }

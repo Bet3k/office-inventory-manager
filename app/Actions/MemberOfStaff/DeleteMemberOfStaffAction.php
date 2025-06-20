@@ -9,7 +9,7 @@ use App\Repository\MemberOfStaffRepository;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-final class DeleteMemberOfStaffAction
+readonly class DeleteMemberOfStaffAction
 {
     private MemberOfStaffRepository $memberOfStaffRepository;
     public function __construct(MemberOfStaffRepository $memberOfStaffRepository)

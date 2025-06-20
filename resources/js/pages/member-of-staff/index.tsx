@@ -1,5 +1,5 @@
 import Layout from '@/layouts/app-layout';
-import MembersOfStaffList from '@/pages/member-of-staff/members-of-staff-list';
+import MembersOfStaffList from '@/pages/member-of-staff/partials/members-of-staff-list';
 import type { BreadcrumbItem } from '@/types';
 import { PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
 import { Head, usePage } from '@inertiajs/react';
