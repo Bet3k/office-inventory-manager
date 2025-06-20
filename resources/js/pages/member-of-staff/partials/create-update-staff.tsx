@@ -64,13 +64,12 @@ function CreateUpdateStaff({ memberOfStaff }: { memberOfStaff?: MembersOfStaffIn
                                 : 'Enter Member of Staff names and click save when done.'}
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4">
+                    <div className="mb-2 grid gap-4">
                         <div className="grid gap-3">
                             <InputWithError
                                 label="First Name"
                                 name="first_name"
                                 type="text"
-                                required
                                 autoFocus
                                 tabIndex={1}
                                 autoComplete="first_name"
@@ -84,7 +83,6 @@ function CreateUpdateStaff({ memberOfStaff }: { memberOfStaff?: MembersOfStaffIn
                                 label="Last Name"
                                 name="last_name"
                                 type="text"
-                                required
                                 tabIndex={2}
                                 autoComplete="last_name"
                                 value={data.last_name}

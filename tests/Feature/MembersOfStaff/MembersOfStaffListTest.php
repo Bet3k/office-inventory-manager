@@ -17,3 +17,17 @@ test('user can see members of staff', function () {
                 ->has('membersOfStaff.data', 15)
         );
 });
+
+test('unauthenticated users cannot see members of staff', function () {
+    $user = createUser();
+
+    MemberOfStaff::factory(15)->create(['user_id' => $user->id]);
+
+    $this
+        ->followingRedirects()
+        ->get(route('member-of-staff.index'))
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('auth/login')
+        );
+});
