@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Dtos;
 
+use App\Contracts\DtoContract;
 use App\Models\UserSession;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use Jenssegers\Agent\Agent;
 
-class SessionDto
+class SessionDto implements DtoContract
 {
     public function __construct(
         public string $id,
@@ -84,21 +86,25 @@ class SessionDto
         ];
     }
 
-    public static function fromModel(UserSession $session): self
+    public static function fromModel(object $model): self
     {
+        if (! $model instanceof UserSession) {
+            throw new InvalidArgumentException('Expected instance of UserSession');
+        }
+
         $agent = new Agent();
-        $agent->setUserAgent($session->user_agent);
+        $agent->setUserAgent($model->user_agent);
 
         return new self(
-            id: $session->id,
-            payload: $session->payload,
-            user_agent: $session->user_agent,
-            ip_address: $session->ip_address,
-            user_id: $session->user_id,
+            id: $model->id,
+            payload: $model->payload,
+            user_agent: $model->user_agent,
+            ip_address: $model->ip_address,
+            user_id: $model->user_id,
             device: (string) ($agent->device() ? $agent->device() : 'Unknown'),
             platform: (string) ($agent->platform() ? $agent->platform() : 'Unknown'),
             browser: (string) ($agent->browser() ? $agent->browser() : 'Unknown'),
-            last_activity: Carbon::createFromTimestamp($session->last_activity),
+            last_activity: Carbon::createFromTimestamp($model->last_activity),
         );
     }
 }

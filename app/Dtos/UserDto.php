@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Dtos;
 
+use App\Contracts\DtoContract;
 use App\Models\Profile;
 use App\Models\User;
 use Carbon\Carbon;
+use InvalidArgumentException;
 
-readonly class UserDto
+readonly class UserDto implements DtoContract
 {
     public function __construct(
         public string $id,
@@ -50,17 +52,21 @@ readonly class UserDto
         ];
     }
 
-    public static function fromModel(User $user): self
+    public static function fromModel(object $model): self
     {
+        if (! $model instanceof User) {
+            throw new InvalidArgumentException('Expected instance of User');
+        }
+
         return new self(
-            id: $user->id,
-            email: $user->email,
-            email_verified_at: $user->email_verified_at,
-            two_factor_confirmed_at: $user->two_factor_confirmed_at,
-            downloaded_codes: $user->downloaded_codes,
-            is_active: $user->is_active,
-            last_login_at: $user->last_login_at,
-            profile: $user->profile,
+            id: $model->id,
+            email: $model->email,
+            email_verified_at: $model->email_verified_at,
+            two_factor_confirmed_at: $model->two_factor_confirmed_at,
+            downloaded_codes: $model->downloaded_codes,
+            is_active: $model->is_active,
+            last_login_at: $model->last_login_at,
+            profile: $model->profile,
         );
     }
 }

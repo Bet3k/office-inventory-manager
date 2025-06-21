@@ -8,8 +8,6 @@ export default function Index() {
     const pageProps = usePage().props;
     const membersOfStaff = pageProps.membersOfStaff as PaginatedMembersOfStaffInterface;
 
-    console.log(membersOfStaff);
-
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Members of Staff',

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Dtos;
 
+use App\Contracts\DtoContract;
 use App\Models\Profile;
 use Carbon\Carbon;
+use InvalidArgumentException;
 
-readonly class ProfileDto
+readonly class ProfileDto implements DtoContract
 {
     public function __construct(
         public string $id,
@@ -18,14 +20,18 @@ readonly class ProfileDto
     ) {
     }
 
-    public static function fromModel(Profile $profile): self
+    public static function fromModel(object $model): self
     {
+        if (! $model instanceof Profile) {
+            throw new InvalidArgumentException('Expected instance of Profile');
+        }
+
         return new self(
-            id: $profile->id,
-            first_name: $profile->first_name,
-            last_name: $profile->last_name,
-            gender: $profile->gender,
-            date_of_birth: $profile->date_of_birth,
+            id: $model->id,
+            first_name: $model->first_name,
+            last_name: $model->last_name,
+            gender: $model->gender,
+            date_of_birth: $model->date_of_birth,
         );
     }
 
