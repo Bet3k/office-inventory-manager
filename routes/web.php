@@ -16,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('member-of-staff', [MemberOfStaffController::class, 'store'])->name('member-of-staff.store');
     Route::put('member-of-staff/{memberOfStaff}', [MemberOfStaffController::class, 'update'])
         ->name('member-of-staff.update');
+    Route::delete('member-of-staff/{memberOfStaff}', [MemberOfStaffController::class, 'destroy'])
+        ->name('member-of-staff.destroy');
 });
 
 Route::get('/auth/callback', [GoogleAuthController::class, 'handleGoogleCallback'])

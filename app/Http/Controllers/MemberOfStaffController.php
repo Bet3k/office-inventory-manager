@@ -6,6 +6,7 @@ use App\Actions\MemberOfStaff\CreateMemberOfStaffAction;
 use App\Actions\MemberOfStaff\DeleteMemberOfStaffAction;
 use App\Actions\MemberOfStaff\ListMembersOfStaffAction;
 use App\Actions\MemberOfStaff\UpdateMemberOfStaffAction;
+use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\MemberOfStaffRequest;
 use App\Models\MemberOfStaff;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -77,7 +78,7 @@ class MemberOfStaffController extends Controller
     }
 
     public function destroy(
-        Request $request,
+        CurrentPasswordRequest $request,
         MemberOfStaff $memberOfStaff,
         DeleteMemberOfStaffAction $action
     ): RedirectResponse {
@@ -85,7 +86,7 @@ class MemberOfStaffController extends Controller
 
         try {
             $action->execute($memberOfStaff);
-            return back()->with('success', 'Member of staff deleted successfully.');
+            return to_route('member-of-staff.index')->with('success', 'Member of staff deleted successfully.');
         } catch (Throwable $e) {
             Log::error('Member of Staff deletion failed.', [
                 'exception' => $e,

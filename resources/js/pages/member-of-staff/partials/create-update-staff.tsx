@@ -13,16 +13,17 @@ import {
 } from '@/components/ui/dialog';
 import { MembersOfStaffInterface } from '@/types/members-of-staff';
 import { useForm } from '@inertiajs/react';
+import { Pen } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
-type RegisterForm = {
+type StaffForm = {
     first_name: string;
     last_name: string;
 };
 
 function CreateUpdateStaff({ memberOfStaff }: { memberOfStaff?: MembersOfStaffInterface }) {
     const [open, setOpen] = useState(false);
-    const { data, setData, post, put, processing, reset, clearErrors } = useForm<Required<RegisterForm>>({
+    const { data, setData, post, put, processing, reset, clearErrors } = useForm<Required<StaffForm>>({
         first_name: memberOfStaff?.first_name || '',
         last_name: memberOfStaff?.last_name || '',
     });
@@ -64,7 +65,12 @@ function CreateUpdateStaff({ memberOfStaff }: { memberOfStaff?: MembersOfStaffIn
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>{memberOfStaff ? 'Update' : 'Create'} Member of Staff</Button>
+                <Button>
+                    <span className="block md:hidden">
+                        <Pen className="h-4 w-4" />
+                    </span>
+                    <span className="hidden md:block">{memberOfStaff ? 'Update' : 'Create'} Member of Staff</span>
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handelSubmit}>
