@@ -13,7 +13,6 @@ type ProfileForm = {
 
 function ProfileData() {
     const { auth } = usePage<SharedData>().props;
-    const genderEnums: Array<string> = usePage().props.gender as Array<string>;
 
     const { data, setData, put, processing } = useForm<Required<ProfileForm>>({
         first_name: auth.user.profile.first_name,
