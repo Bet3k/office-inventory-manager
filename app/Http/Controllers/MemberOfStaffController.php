@@ -6,6 +6,7 @@ use App\Actions\MemberOfStaff\CreateMemberOfStaffAction;
 use App\Actions\MemberOfStaff\DeleteMemberOfStaffAction;
 use App\Actions\MemberOfStaff\ListMembersOfStaffAction;
 use App\Actions\MemberOfStaff\UpdateMemberOfStaffAction;
+use App\Dtos\MemberOfStaffDto;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\MemberOfStaffRequest;
 use App\Models\MemberOfStaff;
@@ -53,7 +54,7 @@ class MemberOfStaffController extends Controller
         $this->authorize('view', $memberOfStaff);
 
         return Inertia::render('member-of-staff/staff-details', [
-            'memberOfStaff' => $memberOfStaff,
+            'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray()
         ]);
     }
 
