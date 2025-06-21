@@ -32,8 +32,6 @@ class UpdateProfileAction
         $profileData = [
             'first_name' => Str::title($request->string('first_name')->value()),
             'last_name' => Str::title($request->string('last_name')->value()),
-            'gender' => strtolower($request->string('gender')->value()),
-            'date_of_birth' => $request->string('date_of_birth')->value(),
         ];
 
         $this->userRepository

@@ -18,9 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $user_id
  * @property string $first_name
  * @property string $last_name
- * @property string $gender
  *
- * @property Carbon|null $date_of_birth
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -37,8 +35,6 @@ class Profile extends Model
         'user_id',
         'first_name',
         'last_name',
-        'gender',
-        'date_of_birth',
     ];
 
     /**
@@ -47,12 +43,5 @@ class Profile extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'date_of_birth' => 'date',
-        ];
     }
 }

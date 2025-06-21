@@ -1,19 +1,14 @@
-import DatePickerWithError from '@/components/date-picker-with-error';
 import InputWithError from '@/components/input-with-error';
 import LoadingButton from '@/components/loading-button';
-import SelectWithError from '@/components/select-with-error';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { SharedData } from '@/types';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { format } from 'date-fns';
 import { FormEventHandler } from 'react';
 
 type ProfileForm = {
     first_name: string;
     last_name: string;
-    gender: string;
     email: string;
-    date_of_birth: string;
 };
 
 function ProfileData() {
@@ -23,9 +18,7 @@ function ProfileData() {
     const { data, setData, put, processing } = useForm<Required<ProfileForm>>({
         first_name: auth.user.profile.first_name,
         last_name: auth.user.profile.last_name,
-        gender: auth.user.profile.gender ?? '',
         email: auth.user.email,
-        date_of_birth: auth.user.profile.date_of_birth ?? format(new Date(), 'yyyy-MM-dd'),
     });
 
     const submit: FormEventHandler = (e) => {
@@ -71,26 +64,6 @@ function ProfileData() {
                                     value={data.last_name}
                                     onChange={(e) => setData('last_name', e.target.value)}
                                     placeholder="Doe"
-                                />
-                            </div>
-                        </div>
-                        <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <div className="grid gap-2">
-                                <SelectWithError
-                                    label="Gender"
-                                    name="gender"
-                                    value={data.gender}
-                                    onChange={(value) => setData('gender', value)}
-                                    placeholder="Select Gender"
-                                    options={genderEnums}
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <DatePickerWithError
-                                    label="Date of Birth"
-                                    name="date_of_birth"
-                                    value={data.date_of_birth}
-                                    onChange={(date) => setData('date_of_birth', date)}
                                 />
                             </div>
                         </div>

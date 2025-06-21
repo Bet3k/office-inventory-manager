@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Profile\UpdateProfileAction;
-use App\Enums\GenderEnum;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
@@ -25,9 +24,7 @@ class ProfileController extends Controller
     {
         $this->authorize('view', $request->user()->profile);
 
-        return Inertia::render('profile/index', [
-            'gender' => GenderEnum::getValues(),
-        ]);
+        return Inertia::render('profile/index');
     }
 
     public function update(

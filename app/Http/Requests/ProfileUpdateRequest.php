@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Enums\GenderEnum;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -36,7 +35,6 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'first_name' => ['required','string','max:255'],
             'last_name' => ['required','string','max:255'],
-            'gender' => ['nullable', Rule::in(GenderEnum::getValues())],
             'email' => [
                 'required',
                 'string',
@@ -45,7 +43,6 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id),
             ],
-            'date_of_birth' => ['nullable','date','date_format:Y-m-d'],
         ];
     }
 }
