@@ -16,8 +16,6 @@ class ProfileFactory extends Factory
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'gender' => $this->faker->randomElement(['male', 'female', 'other']),
-            'date_of_birth' => Carbon::now()->subYears(rand(18, 60)), // Random age between 18 and 60
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

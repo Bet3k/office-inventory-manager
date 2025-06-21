@@ -54,7 +54,7 @@ class MemberOfStaffController extends Controller
         $this->authorize('view', $memberOfStaff);
 
         return Inertia::render('member-of-staff/staff-details', [
-            'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray()
+            'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray(),
         ]);
     }
 

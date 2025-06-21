@@ -6,7 +6,6 @@ namespace App\Dtos;
 
 use App\Contracts\DtoContract;
 use App\Models\Profile;
-use Carbon\Carbon;
 use InvalidArgumentException;
 
 readonly class ProfileDto implements DtoContract
@@ -15,8 +14,6 @@ readonly class ProfileDto implements DtoContract
         public string $id,
         public string $first_name,
         public string $last_name,
-        public string|null $gender,
-        public Carbon|null $date_of_birth,
     ) {
     }
 
@@ -30,8 +27,6 @@ readonly class ProfileDto implements DtoContract
             id: $model->id,
             first_name: $model->first_name,
             last_name: $model->last_name,
-            gender: $model->gender,
-            date_of_birth: $model->date_of_birth,
         );
     }
 
@@ -42,8 +37,6 @@ readonly class ProfileDto implements DtoContract
      *      id: string,
      *      first_name: string,
      *      last_name: string,
-     *      gender: string|null,
-     *      date_of_birth: string|null,
      * }
      */
     public function toArray(): array
@@ -52,8 +45,6 @@ readonly class ProfileDto implements DtoContract
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'gender' => $this->gender,
-            'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
         ];
     }
 }

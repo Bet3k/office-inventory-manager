@@ -17,8 +17,6 @@ test('profile page is displayed', function () {
                     ->where('email', $user->email)
                     ->where('profile.first_name', $user->profile->first_name)
                     ->where('profile.last_name', $user->profile->last_name)
-                    ->where('profile.gender', $user->profile->gender)
-                    ->where('profile.date_of_birth', $user->profile->date_of_birth->format('Y-m-d'))
                     ->etc()
             )
         );
@@ -36,8 +34,6 @@ test('email verification status is unchanged when the email address is unchanged
             'email' => 'john.doe@mail.com',
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'gender' => 'male',
-            'date_of_birth' => '1980-01-01',
         ]);
 
     $response->assertInertia(
@@ -51,9 +47,7 @@ test('email verification status is unchanged when the email address is unchanged
     expect($user->email)->toBe('john.doe@mail.com')
         ->and($user->email_verified_at)->not->toBeNull()
         ->and($user->profile->first_name)->toBe('John')
-        ->and($user->profile->last_name)->toBe('Doe')
-        ->and($user->profile->gender)->toBe('male')
-        ->and($user->profile->date_of_birth->format('Y-m-d'))->toBe('1980-01-01');
+        ->and($user->profile->last_name)->toBe('Doe');
 });
 
 test('email verification status is changed when the email address is unchanged', function () {
@@ -68,8 +62,6 @@ test('email verification status is changed when the email address is unchanged',
             'email' => 'john1.doe@mail.com',
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'gender' => 'male',
-            'date_of_birth' => '1980-01-01',
         ]);
 
     $response->assertInertia(
@@ -83,9 +75,7 @@ test('email verification status is changed when the email address is unchanged',
     expect($user->email)->toBe('john1.doe@mail.com')
         ->and($user->email_verified_at)->toBeNull()
         ->and($user->profile->first_name)->toBe('John')
-        ->and($user->profile->last_name)->toBe('Doe')
-        ->and($user->profile->gender)->toBe('male')
-        ->and($user->profile->date_of_birth->format('Y-m-d'))->toBe('1980-01-01');
+        ->and($user->profile->last_name)->toBe('Doe');
 });
 
 test('user can delete their account', function () {

@@ -35,8 +35,6 @@ class ProfileRepository
         $profile->update([
             'first_name' => str($data['first_name'])->title(),
             'last_name' => str($data['last_name'])->title(),
-            'gender' => str($data['gender'])->lower(),
-            'date_of_birth' => $data['date_of_birth'],
         ]);
     }
 }
