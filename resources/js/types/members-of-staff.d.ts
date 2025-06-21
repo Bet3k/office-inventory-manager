@@ -1,5 +1,5 @@
-import { User } from '@/types/index';
 import { PaginationLink } from '@/types/common';
+import { User } from '@/types/index';
 
 export interface MembersOfStaffInterface {
     id: number;
@@ -31,5 +31,6 @@ export interface PaginatedMembersOfStaffInterface {
 export interface MembersOfStaffInterfaceFilters {
     name: string | null;
     per_page: string | null;
-    sort: string | null;
+    sort_field: string | null;
+    sort_order: string | null;
 }

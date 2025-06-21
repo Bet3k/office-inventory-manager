@@ -28,7 +28,7 @@ class MemberOfStaffController extends Controller
 
         return Inertia::render('member-of-staff/index', [
             'membersOfStaff' => $action->execute($request),
-            'filters' => $request->only(['name', 'per_page']),
+            'filters' => $request->only(['name', 'per_page', 'sort_field', 'sort_order']),
         ]);
     }
 

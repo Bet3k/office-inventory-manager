@@ -28,6 +28,18 @@ class MemberOfStaffRepository
             });
         }
 
+        $sortField = $request->input('sort_field');
+        $sortOrder = $request->input('sort_order');
+
+        $allowedFields = ['first_name', 'last_name'];
+        $allowedOrders = ['asc', 'desc'];
+
+        if (in_array($sortField, $allowedFields, true) && in_array($sortOrder, $allowedOrders, true)) {
+            $query->orderBy($sortField, $sortOrder);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
         return $query->paginate($request->input('per_page'))->withQueryString();
     }
 

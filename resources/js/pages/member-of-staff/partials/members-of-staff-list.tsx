@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import CreateUpdateStaff from '@/pages/member-of-staff/partials/create-update-staff';
 import { MembersOfStaffInterface, MembersOfStaffInterfaceFilters, PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
 import { Link, router, useForm, usePage } from '@inertiajs/react';
-import { X } from 'lucide-react';
+import { ArrowUpDown, X } from 'lucide-react';
 
 function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembersOfStaffInterface }) {
     const pageProps = usePage().props;
@@ -14,6 +14,8 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
     const { data, setData } = useForm({
         name: filters?.name || '',
         per_page: filters?.per_page || '15',
+        sort_order: filters?.sort_order || '',
+        sort_field: filters?.sort_field || '',
     });
 
     const filterMembersOfStaff = (overrides: Partial<typeof data>) => {
@@ -31,6 +33,27 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
                 replace: true,
             },
         );
+    };
+
+    const handleSort = (field: 'first_name' | 'last_name') => {
+        let order: 'asc' | 'desc' | '' = 'asc';
+
+        if (data.sort_field === field) {
+            if (data.sort_order === 'asc') order = 'desc';
+            else if (data.sort_order === 'desc') order = '';
+            else order = 'asc';
+        }
+
+        setData({
+            ...data,
+            sort_field: order ? field : '',
+            sort_order: order,
+        });
+
+        filterMembersOfStaff({
+            sort_field: order ? field : '',
+            sort_order: order,
+        });
     };
 
     return (
@@ -101,8 +124,20 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>First Name</TableHead>
-                            <TableHead>Last Name</TableHead>
+                            <TableHead onClick={() => handleSort('first_name')} className="cursor-pointer">
+                                <div className="flex items-center gap-1">
+                                    First Name
+                                    <ArrowUpDown size={15} className={data.sort_field === 'first_name' ? 'text-black' : 'text-gray-500'} />
+                                </div>
+                            </TableHead>
+
+                            <TableHead onClick={() => handleSort('last_name')} className="cursor-pointer">
+                                <div className="flex items-center gap-1">
+                                    Last Name
+                                    <ArrowUpDown size={15} className={data.sort_field === 'last_name' ? 'text-black' : 'text-gray-500'} />
+                                </div>
+                            </TableHead>
+
                             <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
