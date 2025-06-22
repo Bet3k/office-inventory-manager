@@ -1,10 +1,12 @@
 import PaginatedFooter from '@/components/paginated-footer';
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DeviceInterface, DeviceInterfaceFilters, PaginatedDeviceInterface } from '@/types/device';
 import { router, useForm, usePage } from '@inertiajs/react';
+import { clsx } from 'clsx';
 import { ArrowUpDown, X } from 'lucide-react';
 
 function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
@@ -63,7 +65,6 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                         <CardTitle>Devices</CardTitle>
                         <CardDescription>List of all active Devices</CardDescription>
                     </div>
-                    <CardAction></CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-between md:flex-row">
@@ -161,8 +162,28 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                             <TableRow key={device.id} className="even:bg-muted">
                                 <TableCell className="font-medium">{device.brand}</TableCell>
                                 <TableCell>{device.type}</TableCell>
-                                <TableCell>{device.status}</TableCell>
-                                <TableCell>{device.service_status}</TableCell>
+                                <TableCell>
+                                    <Badge
+                                        className={clsx({
+                                            'bg-green-500': device.status === 'Functional',
+                                            'bg-red-500': device.status === 'Non-Functional',
+                                            'bg-yellow-500': device.status === 'In-Repair',
+                                        })}
+                                    >
+                                        {device.status}
+                                    </Badge>
+                                </TableCell>
+                                <TableCell>
+                                    <Badge
+                                        className={clsx({
+                                            'bg-green-500': device.service_status === 'Available',
+                                            'bg-sky-500': device.service_status === 'Assigned',
+                                            'bg-red-500': device.service_status === 'Decommissioned',
+                                        })}
+                                    >
+                                        {device.service_status}
+                                    </Badge>
+                                </TableCell>
                                 <TableCell>{device.serial_number}</TableCell>
                             </TableRow>
                         ))}

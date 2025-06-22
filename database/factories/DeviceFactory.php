@@ -14,24 +14,26 @@ class DeviceFactory extends Factory
 
     public function definition(): array
     {
+        $status = $this->faker->randomElement(['Functional', 'Non-Functional', 'In-Repair']);
+
         return [
             'brand' => Str::title($this->faker->word()),
-            'type' => $this->faker
-                ->randomElement([
-                    'Printer',
-                    'Laptop',
-                    'Desktop',
-                    'Tablet',
-                    'Mobile',
-                    'Monitor',
-                    'Docking Station'
-                ]),
+            'type' => $this->faker->randomElement([
+                                                      'Printer',
+                                                      'Laptop',
+                                                      'Desktop',
+                                                      'Tablet',
+                                                      'Mobile',
+                                                      'Monitor',
+                                                      'Docking Station'
+                                                  ]),
             'serial_number' => $this->faker->unique()->bothify('SN-#######'),
-            'status' => $this->faker->randomElement(['Functional', 'Non-Functional', 'In-Repair']),
-            'service_status' => $this->faker->randomElement(['Assigned', 'Available']),
+            'status' => $status,
+            'service_status' => $status === 'Non-Functional'
+                ? 'Decommissioned'
+                : $this->faker->randomElement(['Assigned', 'Available']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
             'user_id' => User::factory(),
         ];
     }
