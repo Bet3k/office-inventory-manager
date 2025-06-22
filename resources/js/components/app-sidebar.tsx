@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, GalleryVerticalEnd, House, SquarePen, UserCog } from 'lucide-react';
+import { ChevronDown, ChevronRight, GalleryVerticalEnd, House, MonitorSmartphone, SquarePen } from 'lucide-react';
 import * as React from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -34,20 +34,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 items: [],
             },
             {
-                title: 'User Options',
-                icon: UserCog,
-                items: [
-                    {
-                        title: 'Profile',
-                        href: route('profile.show'),
-                        isActive: currentRoute === 'profile.show',
-                    },
-                    {
-                        title: 'Settings',
-                        href: route('settings.create'),
-                        isActive: currentRoute === 'settings.create',
-                    },
-                ],
+                title: 'Devices',
+                href: route('device.index'),
+                isActive: currentRoute === 'device.index',
+                icon: MonitorSmartphone,
+                items: [],
             },
             {
                 title: 'Members of Staff',

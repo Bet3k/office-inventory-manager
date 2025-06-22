@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Device;
 use App\Models\MemberOfStaff;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,11 +18,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => 'Password1#',
             'email' => 'test@example.com',
         ]);
 
         MemberOfStaff::factory(23)->create(['user_id' => $user->id]);
+
+        Device::factory(25)->create(['user_id' => $user->id]);
     }
 }
