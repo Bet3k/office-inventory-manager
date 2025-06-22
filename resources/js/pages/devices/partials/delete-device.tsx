@@ -11,16 +11,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { MembersOfStaffInterface } from '@/types/members-of-staff';
+import { DeviceInterface } from '@/types/device';
 import { useForm } from '@inertiajs/react';
-import { Trash } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
 type DeleteStaffForm = {
     password: string;
 };
 
-function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface }) {
+function DeleteDevice({ device }: { device: DeviceInterface }) {
     const [open, setOpen] = useState(false);
     const {
         data,
@@ -36,7 +35,7 @@ function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface
     const handelSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('member-of-staff.destroy', memberOfStaff.id), {
+        destroy(route('device.destroy', device.id), {
             onSuccess: () => {
                 reset();
                 closeModal();
@@ -52,17 +51,12 @@ function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="destructive">
-                    <span className="block md:hidden">
-                        <Trash className="h-4 w-4" />
-                    </span>
-                    <span className="hidden md:block">Delete Member of Staff</span>
-                </Button>
+                <span className="cursor-pointer text-red-400 hover:text-red-600 hover:underline">Delete</span>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handelSubmit}>
                     <DialogHeader>
-                        <DialogTitle>Delete Member of Staff</DialogTitle>
+                        <DialogTitle>Delete Device</DialogTitle>
                         <DialogDescription>Are you sure? This action cannot be undone. Enter password to confirm</DialogDescription>
                     </DialogHeader>
                     <div className="mt-3 mb-2 grid gap-4">
@@ -93,4 +87,4 @@ function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface
     );
 }
 
-export default DeleteStaff;
+export default DeleteDevice;

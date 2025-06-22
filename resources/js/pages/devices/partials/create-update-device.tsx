@@ -73,7 +73,7 @@ function CreateUpdateDevice({ device }: { device?: DeviceInterface }) {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {device ? (
-                    <span className="cursor-pointer text-sky-400 hover:text-sky-500 hover:underline">Edit Device</span>
+                    <span className="cursor-pointer text-sky-400 hover:text-sky-500 hover:underline">Edit</span>
                 ) : (
                     <Button>
                         Add Device <Pen className="ml-2 h-4 w-4" />
