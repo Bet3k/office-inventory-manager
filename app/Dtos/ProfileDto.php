@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace App\Dtos;
 
 use App\Contracts\DtoContract;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 readonly class ProfileDto implements DtoContract
 {
     public function __construct(
-        public string $id,
-        public string $first_name,
-        public string $last_name,
+        public ?string $id,
+        public string $firstName,
+        public string $lastName,
     ) {
     }
 
@@ -25,8 +28,26 @@ readonly class ProfileDto implements DtoContract
 
         return new self(
             id: $model->id,
-            first_name: $model->first_name,
-            last_name: $model->last_name,
+            firstName: $model->first_name,
+            lastName: $model->last_name,
+        );
+    }
+
+    public static function fromRegisterRequest(RegisterRequest $request): self
+    {
+        return new self(
+            id: null,
+            firstName: trim(Str::title($request->string('first_name')->value())),
+            lastName: trim(Str::title($request->string('last_name')->value())),
+        );
+    }
+
+    public static function fromUpdateRequest(ProfileUpdateRequest $request): self
+    {
+        return new self(
+            id: null,
+            firstName: trim(Str::title($request->string('first_name')->value())),
+            lastName: trim(Str::title($request->string('last_name')->value())),
         );
     }
 
@@ -34,7 +55,7 @@ readonly class ProfileDto implements DtoContract
      * Convert the DTO to an array representation.
      *
      * @return array{
-     *      id: string,
+     *      id: string|null,
      *      first_name: string,
      *      last_name: string,
      * }
@@ -43,8 +64,8 @@ readonly class ProfileDto implements DtoContract
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
         ];
     }
 }

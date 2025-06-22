@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\Profile;
 
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Dtos\ProfileDto;
 use App\Models\Profile;
 use App\Repository\ProfileRepository;
 use App\Repository\UserRepository;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class UpdateProfileAction
 {
@@ -26,17 +27,18 @@ class UpdateProfileAction
 
     /**
      * Update the authenticated user profile.
+     *
+     * @throws Throwable
      */
-    public function execute(Profile $profile, ProfileUpdateRequest $request): void
+    public function execute(Profile $profile, ProfileDto $dto, string $email): Profile
     {
-        $profileData = [
-            'first_name' => Str::title($request->string('first_name')->value()),
-            'last_name' => Str::title($request->string('last_name')->value()),
-        ];
+        return DB::transaction(function () use ($profile, $dto, $email) {
+            $profile->first_name = $dto->firstName;
+            $profile->last_name = $dto->lastName;
 
-        $this->userRepository
-            ->updateEmail($profile->user, strtolower($request->string('email')->value()));
+            $this->userRepository->updateEmail($profile->user, $email);
 
-        $this->profileRepository->update($profile, $profileData);
+            return $this->profileRepository->save($profile);
+        });
     }
 }

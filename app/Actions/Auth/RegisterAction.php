@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
+use App\Dtos\ProfileDto;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Jobs\SendVerificationEmailJob;
+use App\Models\Profile;
 use App\Models\User;
 use App\Repository\ProfileRepository;
 use App\Repository\UserRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Throwable;
 
 class RegisterAction
@@ -36,7 +37,7 @@ class RegisterAction
      *
      * @throws Throwable
      */
-    public function execute(Request $request): User
+    public function execute(RegisterRequest $request): User
     {
         return DB::transaction(function () use ($request): User {
             $user = $this->userRepository->create([
@@ -46,15 +47,14 @@ class RegisterAction
                 'is_active' => true,
             ]);
 
-            $this->profileRepository->create([
-                'user_id' => $user->id,
-                'first_name' => Str::title($request
-                    ->string('first_name')
-                    ->value()),
-                'last_name' => Str::title($request
-                    ->string('last_name')
-                    ->value()),
-            ]);
+            $dto = ProfileDto::fromRegisterRequest($request);
+
+            $profile = new Profile();
+            $profile->first_name = $dto->firstName;
+            $profile->last_name = $dto->lastName;
+            $profile->user_id = $user->id;
+
+            $this->profileRepository->save($profile);
 
             SendVerificationEmailJob::dispatch($user);
 

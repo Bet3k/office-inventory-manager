@@ -36,8 +36,10 @@ class MemberOfStaffController extends Controller
     {
         $this->authorize('create', MemberOfStaff::class);
 
+        $dto = MemberOfStaffDto::fromRequest($request);
+
         try {
-            $action->execute($request);
+            $action->execute($dto);
             return back()->with('success', 'Member of staff created successfully.');
         } catch (Throwable $e) {
             Log::error('Member of Staff creation failed.', [
@@ -65,8 +67,10 @@ class MemberOfStaffController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $memberOfStaff);
 
+        $dto = MemberOfStaffDto::fromRequest($request);
+
         try {
-            $action->execute($request, $memberOfStaff);
+            $action->execute($dto, $memberOfStaff);
             return back()->with('success', 'Member of staff updated successfully.');
         } catch (Throwable $e) {
             Log::error('Member of Staff update failed.', [
