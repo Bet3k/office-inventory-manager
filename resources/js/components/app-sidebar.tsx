@@ -35,14 +35,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             },
             {
                 title: 'Devices',
+                href: route('device.index'),
+                isActive: currentRoute === 'device.index',
                 icon: MonitorSmartphone,
-                items: [
-                    {
-                        title: 'All Devices',
-                        href: route('device.index'),
-                        isActive: currentRoute === 'device.index',
-                    },
-                ],
+                items: [],
             },
             {
                 title: 'Members of Staff',

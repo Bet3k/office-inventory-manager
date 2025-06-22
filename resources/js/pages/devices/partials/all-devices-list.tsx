@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CreateUpdateDevice from '@/pages/devices/partials/create-update-device';
 import { DeviceInterface, DeviceInterfaceFilters, PaginatedDeviceInterface } from '@/types/device';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { clsx } from 'clsx';
@@ -185,6 +186,9 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                     </Badge>
                                 </TableCell>
                                 <TableCell>{device.serial_number}</TableCell>
+                                <TableCell className="text-right">
+                                    <CreateUpdateDevice device={device} />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

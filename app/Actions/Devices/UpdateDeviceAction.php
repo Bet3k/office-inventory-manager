@@ -32,7 +32,9 @@ readonly class UpdateDeviceAction
             $device->brand = $dto->brand;
             $device->type = $dto->type;
             $device->status = $dto->status;
-            $device->service_status = $dto->serviceStatus;
+            // If the device is Non-Functional, auto set service status to Decommissioned
+            // in case the user forgets to set it
+            $device->service_status = $dto->status === 'Non-Functional' ? 'Decommissioned' : $dto->serviceStatus;
             $device->serial_number = $dto->serialNumber;
 
             return $this->deviceRepository->save($device);

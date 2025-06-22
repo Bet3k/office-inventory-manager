@@ -18,7 +18,7 @@ class DeviceRequest extends FormRequest
      */
     public function rules(): array
     {
-        /** @var Device $device */
+        /** @var Device|null $device */
         $device = $this->route('device');
 
         return [
@@ -27,7 +27,9 @@ class DeviceRequest extends FormRequest
             'serial_number' => [
                 'required',
                 'string',
-                Rule::unique('devices', 'serial_number')->ignore($device->id),
+                $device
+                    ? Rule::unique('devices', 'serial_number')->ignore($device->id)
+                    : Rule::unique('devices', 'serial_number'),
             ],
             'status' => ['required', 'string'],
             'service_status' => ['required', 'string'],
