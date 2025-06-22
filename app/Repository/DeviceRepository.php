@@ -25,10 +25,22 @@ class DeviceRepository
         $query = Device::query();
 
         $filters = ['brand', 'type', 'serial_number', 'status', 'service_status'];
-        foreach ($filters as $filter) {
+        // Uncomment the following lines if you want to filter by ui table columns
+        /*foreach ($filters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, 'like', '%' . $request->input($filter) . '%');
             }
+        }*/
+
+        // Uses one search field to filter multiple columns
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('brand', 'like', '%'.$request->input('search').'%')
+                    ->orWhere('type', 'like', '%'.$request->input('search').'%')
+                    ->orWhere('status', 'like', '%'.$request->input('search').'%')
+                    ->orWhere('service_status', 'like', '%'.$request->input('search').'%')
+                    ->orWhere('serial_number', 'like', '%'.$request->input('search').'%');
+            });
         }
 
         $sortField = $request->input('sort_field');

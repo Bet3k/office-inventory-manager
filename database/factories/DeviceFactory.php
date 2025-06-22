@@ -6,33 +6,29 @@ use App\Models\Device;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class DeviceFactory extends Factory
 {
     protected $model = Device::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition(): array
     {
         return [
-            'brand' => $this->faker->word(),
+            'brand' => Str::title($this->faker->word()),
             'type' => $this->faker
                 ->randomElement([
-                    'printer',
-                    'laptop',
-                    'desktop',
-                    'tablet',
-                    'mobile',
-                    'monitor',
-                    'docking station'
+                    'Printer',
+                    'Laptop',
+                    'Desktop',
+                    'Tablet',
+                    'Mobile',
+                    'Monitor',
+                    'Docking Station'
                 ]),
             'serial_number' => $this->faker->unique()->bothify('SN-#######'),
-            'status' => $this->faker->randomElement(['functional', 'non-functional', 'in-repair']),
-            'service_status' => $this->faker->randomElement(['assigned', 'available']),
+            'status' => $this->faker->randomElement(['Functional', 'Non-Functional', 'In-Repair']),
+            'service_status' => $this->faker->randomElement(['Assigned', 'Available']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

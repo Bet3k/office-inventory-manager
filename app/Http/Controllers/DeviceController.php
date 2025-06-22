@@ -27,7 +27,7 @@ class DeviceController extends Controller
         $this->authorize('viewAny', Device::class);
 
         return Inertia::render('devices/index', [
-            'membersOfStaff' => $action->execute($request),
+            'devices' => $action->execute($request),
             'filters' => $request->only([
                 'brand',
                 'type',
@@ -37,6 +37,7 @@ class DeviceController extends Controller
                 'sort_field',
                 'sort_order',
                 'per_page',
+                'search',
             ]),
         ]);
     }
