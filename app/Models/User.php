@@ -96,6 +96,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ConnectedAccount::class);
     }
 
+    public function hasResources(): bool
+    {
+        return collect([
+            $this->membersOfStaff()->exists(),
+        ])->contains(true);
+    }
+
+    /**
+     * @return HasMany<MemberOfStaff, $this>
+     */
+    public function membersOfStaff(): HasMany
+    {
+        return $this->hasMany(MemberOfStaff::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

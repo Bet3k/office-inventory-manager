@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\MemberOfStaffController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('member-of-staff.update');
     Route::delete('member-of-staff/{memberOfStaff}', [MemberOfStaffController::class, 'destroy'])
         ->name('member-of-staff.destroy');
+
+    Route::resource('device', DeviceController::class);
 });
 
 Route::get('/auth/callback', [GoogleAuthController::class, 'handleGoogleCallback'])

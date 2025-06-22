@@ -53,14 +53,18 @@ class ProfileController extends Controller
     {
         $this->authorize('delete', $request->user()->profile);
 
+        if ($request->user()->hasResources()) {
+            return back()->with('error', 'Please delete associated data first.');
+        }
+
+        $profile->user->delete();
+
         /** @var StatefulGuard $guard */
         $guard = Auth::guard('web');
         $guard->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        $profile->user->delete();
 
         return to_route('login')->with('success', 'Profile deleted successfully. Goodbye!');
     }

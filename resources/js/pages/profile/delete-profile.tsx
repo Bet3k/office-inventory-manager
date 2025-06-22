@@ -35,6 +35,7 @@ export default function DeleteProfile() {
                 reset();
                 passwordInput.current?.focus();
             },
+            onSuccess: () => setDialogOpen(false),
         });
     };
 

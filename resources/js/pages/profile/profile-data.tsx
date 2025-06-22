@@ -29,7 +29,7 @@ function ProfileData() {
     };
     return (
         <div className="flex w-full items-center justify-center p-4">
-            <Card className="md:w-1/2">
+            <Card className="w-full md:w-1/2">
                 <form onSubmit={submit} className="space-y-6">
                     <CardHeader>
                         <CardTitle>Profile Details</CardTitle>
