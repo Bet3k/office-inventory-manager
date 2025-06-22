@@ -27,6 +27,7 @@ class UpdateProfileAction
 
     /**
      * Update the authenticated user profile.
+     *
      * @throws Throwable
      */
     public function execute(Profile $profile, ProfileDto $dto, string $email): Profile

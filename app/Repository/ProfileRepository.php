@@ -12,7 +12,6 @@ class ProfileRepository
     {
     }
 
-
     /**
      * Saves or updates a profile.
      *
