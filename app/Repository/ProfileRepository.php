@@ -12,29 +12,18 @@ class ProfileRepository
     {
     }
 
-    /**
-     * Create a new profile.
-     *
-     * @param  array<string, string>  $data  Profile data.
-     */
-    public function create(array $data): Profile
-    {
-        return Profile::query()->create($data);
-    }
 
     /**
-     * Update an existing profile.
+     * Saves or updates a profile.
      *
-     * This method updates the profile’s first name, last name, and gender.
+     * @param  Profile  $profile
      *
-     * @param  Profile  $profile  The profile to be updated.
-     * @param  array<string, string>  $data  Profile data.
+     * @return Profile
      */
-    public function update(Profile $profile, array $data): void
+    public function save(Profile $profile): Profile
     {
-        $profile->update([
-            'first_name' => str($data['first_name'])->title(),
-            'last_name' => str($data['last_name'])->title(),
-        ]);
+        $profile->save();
+
+        return $profile->refresh();
     }
 }

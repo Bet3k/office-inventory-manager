@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Profile\UpdateProfileAction;
+use App\Dtos\ProfileDto;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
@@ -13,8 +14,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class ProfileController extends Controller
 {
@@ -27,6 +30,9 @@ class ProfileController extends Controller
         return Inertia::render('profile/index');
     }
 
+    /**
+     * @throws Throwable
+     */
     public function update(
         ProfileUpdateRequest $request,
         Profile $profile,
@@ -34,7 +40,11 @@ class ProfileController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $profile);
 
-        $action->execute($profile, $request);
+        $dto = ProfileDto::fromUpdateRequest($request);
+
+        $email = trim(Str::lower($request->string('email')->value()));
+
+        $action->execute($profile, $dto, $email);
 
         return back()->with('success', 'Profile updated successfully.');
     }
