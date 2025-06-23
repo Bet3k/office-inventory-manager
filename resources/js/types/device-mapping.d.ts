@@ -1,8 +1,9 @@
 import { PaginationLink } from '@/types/common';
 import { User } from '@/types/index';
 
-export interface DeviceInterface {
+export interface DeviceMappingInterface {
     id: string;
+    mapping_id: string;
     brand: string;
     type: string;
     status: string;
@@ -15,7 +16,7 @@ export interface DeviceInterface {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-export interface PaginatedDeviceInterface {
+export interface PaginatedDeviceMappingInterface {
     current_page: number;
     data: DeviceInterface[];
     first_page_url: string;
@@ -31,7 +32,7 @@ export interface PaginatedDeviceInterface {
     total: number;
 }
 
-export interface DeviceInterfaceFilters {
+export interface DeviceMappingInterfaceFilters {
     search: string | null;
     brand: string | null;
     type: string | null;
