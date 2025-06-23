@@ -1,7 +1,17 @@
-# Laravel + Inertia + React Starter Kit
+# Laravel + Inertia + React Office Device Manager
 
-A starter kit using Laravel, Inertia.js, and React. Preconfigured with essential tools for development, debugging,
-static analysis, and UI components.
+Using the [Starter Kit](https://github.com/IsaacHatilima/starter-with-auth), this application was built to help
+organizations efficiently manage and keep track of their office hardware inventory. It allows administrators to add,
+update, and monitor various devices such as laptops, desktops, tablets, printers, and other office equipment.
+
+Each device has a status that indicates its condition — whether it is Functional, Non-Functional, or In-Repair — and a
+service status that shows whether the device is Assigned to a member of staff, Available for use, or Decommissioned.
+
+The app also supports creating and managing members of staff, allowing administrators to assign devices directly to
+staff members. This enables clear visibility into who is using which device, and helps track changes over time.
+
+Built with maintainability and clarity in mind, the system supports searchable, paginated device listings, robust form
+validation, and transactional updates to ensure consistency across device and assignment data.
 
 ---
 
@@ -15,8 +25,6 @@ static analysis, and UI components.
 ## Authentication
 
 - [Laravel Fortify](https://laravel.com/docs/12.x/fortify#main-content) – Only handles login with or without 2FA.
-- [Laravel Socialite](https://laravel.com/docs/12.x/socialite#main-content) – Provides OAuth authentication with
-  providers like GitHub, Google, etc. Currently, app only configured to use Google.
 
 ---
 

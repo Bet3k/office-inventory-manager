@@ -37,4 +37,12 @@ class DeviceFactory extends Factory
             'user_id' => User::factory(),
         ];
     }
+
+    public function assigned(): DeviceFactory
+    {
+        return $this->state([
+                                'status' => 'Functional',
+                                'service_status' => 'Assigned',
+                            ]);
+    }
 }
