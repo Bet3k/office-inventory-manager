@@ -10,6 +10,7 @@ use App\Dtos\DeviceDto;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\DeviceRequest;
 use App\Models\Device;
+use App\Models\MemberOfStaff;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class DeviceController extends Controller
 
         return Inertia::render('devices/index', [
             'devices' => $action->execute($request),
+            'staffs' => MemberOfStaff::query()->get(),
             'filters' => $request->only([
                 'brand',
                 'type',

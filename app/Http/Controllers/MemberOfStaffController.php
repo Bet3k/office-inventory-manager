@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\DeviceStaffMapping\ListMappingAction;
 use App\Actions\MemberOfStaff\CreateMemberOfStaffAction;
 use App\Actions\MemberOfStaff\DeleteMemberOfStaffAction;
 use App\Actions\MemberOfStaff\ListMembersOfStaffAction;
@@ -51,12 +52,13 @@ class MemberOfStaffController extends Controller
         }
     }
 
-    public function show(MemberOfStaff $memberOfStaff): Response
+    public function show(Request $request, MemberOfStaff $memberOfStaff, ListMappingAction $action): Response
     {
         $this->authorize('view', $memberOfStaff);
 
         return Inertia::render('member-of-staff/staff-details', [
             'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray(),
+            'deviceStaffMappings' => $action->execute($request, $memberOfStaff),
         ]);
     }
 

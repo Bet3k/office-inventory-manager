@@ -1,20 +1,17 @@
 import PaginatedFooter from '@/components/paginated-footer';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import AssignDevice from '@/pages/devices/partials/assign-device';
-import CreateUpdateDevice from '@/pages/devices/partials/create-update-device';
-import DeleteDevice from '@/pages/devices/partials/delete-device';
-import { DeviceInterface, DeviceInterfaceFilters, PaginatedDeviceInterface } from '@/types/device';
+import ReturnDevice from '@/pages/member-of-staff/partials/return-device';
+import { DeviceMappingInterface, DeviceMappingInterfaceFilters, PaginatedDeviceMappingInterface } from '@/types/device-mapping';
+import { MembersOfStaffInterface } from '@/types/members-of-staff';
 import { router, useForm, usePage } from '@inertiajs/react';
-import { clsx } from 'clsx';
 import { ArrowUpDown, X } from 'lucide-react';
 
-function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
+function AssignedDevices({ devices, memberOfStaff }: { devices: PaginatedDeviceMappingInterface; memberOfStaff: MembersOfStaffInterface }) {
     const pageProps = usePage().props;
-    const filters: DeviceInterfaceFilters = pageProps.filters as DeviceInterfaceFilters;
+    const filters: DeviceMappingInterfaceFilters = pageProps.filters as DeviceMappingInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
         per_page: filters?.per_page || '15',
@@ -24,7 +21,7 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
 
     const filterMembersOfStaff = (overrides: Partial<typeof data>) => {
         router.get(
-            route('device.index'),
+            route('member-of-staff.show', memberOfStaff.id),
             {
                 search: data.search,
                 per_page: data.per_page,
@@ -59,14 +56,13 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
             sort_order: order,
         });
     };
-
     return (
-        <Card className="px-4 py-9">
+        <div className="px-4 py-9">
             <CardHeader className="flex w-full flex-col">
                 <div className="mb-3 flex w-full justify-between">
                     <div>
                         <CardTitle>Devices</CardTitle>
-                        <CardDescription>List of all active Devices</CardDescription>
+                        <CardDescription>List of all assigned Devices to current member of staff</CardDescription>
                     </div>
                 </div>
 
@@ -138,19 +134,6 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                     <ArrowUpDown size={15} className={data.sort_field === 'type' ? 'text-black' : 'text-gray-500'} />
                                 </div>
                             </TableHead>
-                            <TableHead onClick={() => handleSort('status')} className="cursor-pointer">
-                                <div className="flex items-center gap-1">
-                                    Status
-                                    <ArrowUpDown size={15} className={data.sort_field === 'status' ? 'text-black' : 'text-gray-500'} />
-                                </div>
-                            </TableHead>
-
-                            <TableHead onClick={() => handleSort('service_status')} className="cursor-pointer">
-                                <div className="flex items-center gap-1">
-                                    Service Status
-                                    <ArrowUpDown size={15} className={data.sort_field === 'service_status' ? 'text-black' : 'text-gray-500'} />
-                                </div>
-                            </TableHead>
 
                             <TableHead onClick={() => handleSort('serial_number')} className="cursor-pointer">
                                 <div className="flex items-center gap-1">
@@ -161,37 +144,13 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {devices.data.map((device: DeviceInterface) => (
+                        {devices.data.map((device: DeviceMappingInterface) => (
                             <TableRow key={device.id} className="even:bg-muted">
                                 <TableCell className="font-medium">{device.brand}</TableCell>
                                 <TableCell>{device.type}</TableCell>
-                                <TableCell>
-                                    <Badge
-                                        className={clsx({
-                                            'bg-green-500': device.status === 'Functional',
-                                            'bg-red-500': device.status === 'Non-Functional',
-                                            'bg-yellow-500': device.status === 'In-Repair',
-                                        })}
-                                    >
-                                        {device.status}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>
-                                    <Badge
-                                        className={clsx({
-                                            'bg-green-500': device.service_status === 'Available',
-                                            'bg-sky-500': device.service_status === 'Assigned',
-                                            'bg-red-500': device.service_status === 'Decommissioned',
-                                        })}
-                                    >
-                                        {device.service_status}
-                                    </Badge>
-                                </TableCell>
                                 <TableCell>{device.serial_number}</TableCell>
                                 <TableCell className="flex justify-end gap-2">
-                                    {device.service_status === 'Available' && device.status === 'Functional' && <AssignDevice device={device} />}
-                                    <CreateUpdateDevice device={device} />
-                                    <DeleteDevice device={device} />
+                                    <ReturnDevice device={device} />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -201,8 +160,8 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
             <CardFooter>
                 <PaginatedFooter paginator={devices} />
             </CardFooter>
-        </Card>
+        </div>
     );
 }
 
-export default AllDevicesList;
+export default AssignedDevices;

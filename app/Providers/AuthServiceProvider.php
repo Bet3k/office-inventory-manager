@@ -6,11 +6,13 @@ namespace App\Providers;
 
 use App\Models\ConnectedAccount;
 use App\Models\Device;
+use App\Models\DeviceStaffMapping;
 use App\Models\MemberOfStaff;
 use App\Models\Profile;
 use App\Models\User;
 use App\Policies\ConnectedAccountPolicy;
 use App\Policies\DevicePolicy;
+use App\Policies\DeviceStaffMappingPolicy;
 use App\Policies\MemberOfStaffPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\UserPolicy;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         ConnectedAccount::class => ConnectedAccountPolicy::class,
         MemberOfStaff::class => MemberOfStaffPolicy::class,
         Device::class => DevicePolicy::class,
+        DeviceStaffMapping::class => DeviceStaffMappingPolicy::class,
     ];
 
     /**
