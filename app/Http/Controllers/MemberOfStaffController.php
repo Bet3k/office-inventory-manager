@@ -59,6 +59,7 @@ class MemberOfStaffController extends Controller
         return Inertia::render('member-of-staff/staff-details', [
             'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray(),
             'deviceStaffMappings' => $action->execute($request, $memberOfStaff),
+            'hasResources' => $memberOfStaff->hasResources(),
         ]);
     }
 
@@ -90,6 +91,10 @@ class MemberOfStaffController extends Controller
         DeleteMemberOfStaffAction $action
     ): RedirectResponse {
         $this->authorize('delete', $memberOfStaff);
+
+        if ($memberOfStaff->hasResources()) {
+            return back()->with('error', 'Staff still has devices.');
+        }
 
         try {
             $action->execute($memberOfStaff);

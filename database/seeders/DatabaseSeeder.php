@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         /** @var User $user */
-        $user = User::factory()->create([
-                                            'password' => 'Password1#',
-                                            'email' => 'test@example.com',
-                                        ]);
+        $user = User::factory()
+            ->create([
+                'password' => 'Password1#',
+                'email' => 'test@example.com',
+            ]);
 
         /** @var MemberOfStaff $staff */
         $staff = MemberOfStaff::factory(4)->create(['user_id' => $user->id]);
@@ -37,11 +38,12 @@ class DatabaseSeeder extends Seeder
 
         // Assign those to staff
         foreach ($assignedDevices as $device) {
-            DeviceStaffMapping::factory()->create([
-                                                      'user_id' => $user->id,
-                                                      'device_id' => $device->id,
-                                                      'member_of_staff_id' => $staff->random()->id,
-                                                  ]);
+            DeviceStaffMapping::factory()
+                ->create([
+                    'user_id' => $user->id,
+                    'device_id' => $device->id,
+                    'member_of_staff_id' => $staff->random()->id,
+                ]);
         }
     }
 }

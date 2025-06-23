@@ -1,6 +1,6 @@
 import PaginatedFooter from '@/components/paginated-footer';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -68,6 +68,9 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                         <CardTitle>Devices</CardTitle>
                         <CardDescription>List of all active Devices</CardDescription>
                     </div>
+                    <CardAction>
+                        <CreateUpdateDevice />
+                    </CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-between md:flex-row">
@@ -191,7 +194,7 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                 <TableCell className="flex justify-end gap-2">
                                     {device.service_status === 'Available' && device.status === 'Functional' && <AssignDevice device={device} />}
                                     <CreateUpdateDevice device={device} />
-                                    <DeleteDevice device={device} />
+                                    {['Available', 'Decommissioned'].includes(device.service_status) && <DeleteDevice device={device} />}
                                 </TableCell>
                             </TableRow>
                         ))}

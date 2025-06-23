@@ -88,6 +88,11 @@ class DeviceController extends Controller
         DeleteDeviceAction $action
     ): RedirectResponse {
         $this->authorize('delete', $device);
+
+        if ($device->hasResources()) {
+            return back()->with('error', 'Device still assigned.');
+        }
+
         try {
             $action->execute($device);
             return back()->with('success', 'Device deleted successfully.');
