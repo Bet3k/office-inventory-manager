@@ -11,6 +11,7 @@ import { Head, usePage } from '@inertiajs/react';
 export default function StaffDetails({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface }) {
     const pageProps = usePage().props;
     const deviceStaffMappings = pageProps.deviceStaffMappings as PaginatedDeviceInterface;
+    const hasResources = pageProps.hasResources as boolean;
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -32,7 +33,7 @@ export default function StaffDetails({ memberOfStaff }: { memberOfStaff: Members
                     </CardTitle>
                     <CardAction className="flex gap-2">
                         <CreateUpdateStaff memberOfStaff={memberOfStaff} />
-                        <DeleteStaff memberOfStaff={memberOfStaff} />
+                        {!hasResources && <DeleteStaff memberOfStaff={memberOfStaff} />}
                     </CardAction>
                 </CardHeader>
                 <CardContent>

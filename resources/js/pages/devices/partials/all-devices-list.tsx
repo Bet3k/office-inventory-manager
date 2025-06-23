@@ -191,7 +191,7 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                 <TableCell className="flex justify-end gap-2">
                                     {device.service_status === 'Available' && device.status === 'Functional' && <AssignDevice device={device} />}
                                     <CreateUpdateDevice device={device} />
-                                    <DeleteDevice device={device} />
+                                    {['Available', 'Decommissioned'].includes(device.service_status) && <DeleteDevice device={device} />}
                                 </TableCell>
                             </TableRow>
                         ))}
