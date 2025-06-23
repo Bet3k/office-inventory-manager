@@ -14,7 +14,6 @@ import { ArrowUpDown, X } from 'lucide-react';
 
 function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
     const pageProps = usePage().props;
-    const staff = pageProps.staff as [];
     const filters: DeviceInterfaceFilters = pageProps.filters as DeviceInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
