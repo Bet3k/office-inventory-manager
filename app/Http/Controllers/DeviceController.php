@@ -30,6 +30,12 @@ class DeviceController extends Controller
         return Inertia::render('devices/index', [
             'devices' => $action->execute($request),
             'staffs' => MemberOfStaff::query()->get(),
+            'permissions' => [
+                'assign' => $request->user()->can('assign-devices'),
+                'create' => $request->user()->can('create-devices'),
+                'update' => $request->user()->can('update-devices'),
+                'delete' => $request->user()->can('delete-devices'),
+            ],
             'filters' => $request->only([
                 'brand',
                 'type',

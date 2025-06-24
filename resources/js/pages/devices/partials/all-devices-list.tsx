@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AssignDevice from '@/pages/devices/partials/assign-device';
 import CreateUpdateDevice from '@/pages/devices/partials/create-update-device';
 import DeleteDevice from '@/pages/devices/partials/delete-device';
+import { Permissions } from '@/types/common';
 import { DeviceInterface, DeviceInterfaceFilters, PaginatedDeviceInterface } from '@/types/device';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { clsx } from 'clsx';
@@ -14,6 +15,7 @@ import { ArrowUpDown, X } from 'lucide-react';
 
 function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
     const pageProps = usePage().props;
+    const permissions = pageProps.permissions as Permissions;
     const filters: DeviceInterfaceFilters = pageProps.filters as DeviceInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
@@ -68,9 +70,7 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                         <CardTitle>Devices</CardTitle>
                         <CardDescription>List of all active Devices</CardDescription>
                     </div>
-                    <CardAction>
-                        <CreateUpdateDevice />
-                    </CardAction>
+                    <CardAction>{permissions.create && <CreateUpdateDevice />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-between md:flex-row">
@@ -193,8 +193,11 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                 <TableCell>{device.serial_number}</TableCell>
                                 <TableCell className="flex justify-end gap-2">
                                     {device.service_status === 'Available' && device.status === 'Functional' && <AssignDevice device={device} />}
-                                    <CreateUpdateDevice device={device} />
-                                    {['Available', 'Decommissioned'].includes(device.service_status) && <DeleteDevice device={device} />}
+                                    {/*TODO: Extend permissions interface to include assign permission*/}
+                                    {permissions.update && <CreateUpdateDevice device={device} />}
+                                    {permissions.delete && ['Available', 'Decommissioned'].includes(device.service_status) && (
+                                        <DeleteDevice device={device} />
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}

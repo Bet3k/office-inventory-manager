@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->timestamps();
         });
 
-        foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
+        foreach (['view', 'viewAny', 'create', 'update', 'delete', 'assign'] as $action) {
             Permission::create(['name' => "$action-devices"]);
         }
     }
