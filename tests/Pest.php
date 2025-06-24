@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
@@ -50,10 +52,20 @@ expect()->extend('toBeOne', function () {
 
 function createUser()
 {
-    return User::factory()->create([
+    $user = User::factory()->create([
         'email' => 'john.doe@mail.com',
         'password' => Hash::make('Password1#')
     ]);
+
+    $role = Role::create(['name' => 'super-admin']);
+
+    $permissions = Permission::all();
+
+    $role->syncPermissions($permissions);
+
+    $user->assignRole('super-admin');
+
+    return $user;
 }
 
 /**
