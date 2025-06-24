@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,10 +18,18 @@ return new class () extends Migration {
             $table->string('service_status');
             $table->timestamps();
         });
+
+        foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
+            Permission::create(['name' => "$action-device"]);
+        }
     }
 
     public function down(): void
     {
+        foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
+            Permission::query()->where('name', "$action-device")->delete();
+        }
+
         Schema::dropIfExists('devices');
     }
 };
