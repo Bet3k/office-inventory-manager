@@ -18,7 +18,7 @@ class DeviceStaffMappingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('viewAny-device_staff_mappings');
     }
 
     /**
@@ -30,7 +30,7 @@ class DeviceStaffMappingPolicy
      */
     public function view(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('view-device_staff_mappings');
     }
 
     /**
@@ -42,7 +42,7 @@ class DeviceStaffMappingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('create-device_staff_mappings');
     }
 
     /**
@@ -54,7 +54,7 @@ class DeviceStaffMappingPolicy
      */
     public function update(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('update-device_staff_mappings');
     }
 
     /**
@@ -66,6 +66,6 @@ class DeviceStaffMappingPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('delete-device_staff_mappings');
     }
 }

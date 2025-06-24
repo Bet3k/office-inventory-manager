@@ -18,7 +18,7 @@ class DevicePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('viewAny-devices');
     }
 
     /**
@@ -30,7 +30,7 @@ class DevicePolicy
      */
     public function view(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('view-devices');
     }
 
     /**
@@ -42,7 +42,7 @@ class DevicePolicy
      */
     public function create(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('create-devices');
     }
 
     /**
@@ -54,7 +54,7 @@ class DevicePolicy
      */
     public function update(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('update-devices');
     }
 
     /**
@@ -66,6 +66,6 @@ class DevicePolicy
      */
     public function delete(User $user): bool
     {
-        return $user->is_active;
+        return $user->can('delete-devices');
     }
 }

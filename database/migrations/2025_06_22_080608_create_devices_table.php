@@ -20,14 +20,14 @@ return new class () extends Migration {
         });
 
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::create(['name' => "$action-device"]);
+            Permission::create(['name' => "$action-devices"]);
         }
     }
 
     public function down(): void
     {
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::query()->where('name', "$action-device")->delete();
+            Permission::query()->where('name', "$action-devices")->delete();
         }
 
         Schema::dropIfExists('devices');

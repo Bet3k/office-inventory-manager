@@ -18,7 +18,7 @@ class SoftwarePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-software');
+        return $user->can('viewAny-software');
     }
 
     /**
@@ -30,7 +30,7 @@ class SoftwarePolicy
      */
     public function view(User $user): bool
     {
-        return $user->can('viewAny-software');
+        return $user->can('view-software');
     }
 
     /**

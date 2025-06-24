@@ -13,30 +13,25 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->exists;
+        return $user->can('viewAny-users');
     }
 
     public function view(User $user, User $model): bool
     {
-        return $user->id === $model->id;
+        return $user->id === $model->id || $user->can('view-users');
     }
 
-    /*public function create(User $user): bool
+    public function create(User $user): bool
     {
-        return in_array($user->role, [
-            'superadmin',
-            'support',
-            'admin',
-            'headteacher',
-        ]);
-    }*/
+        return $user->can('create-users');
+    }
     public function update(User $user, User $model): bool
     {
-        return $user->id === $model->id;
+        return $user->id === $model->id || $user->can('update-users');
     }
 
     public function delete(User $user, User $model): bool
     {
-        return $user->id === $model->id;
+        return $user->id === $model->id || $user->can('delete-users');
     }
 }
