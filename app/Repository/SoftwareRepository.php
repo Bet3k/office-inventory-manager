@@ -28,10 +28,14 @@ class SoftwareRepository
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%'.$request->input('search').'%')
-                    ->orWhere('status', 'like', '%'.$request->input('search').'%');
+                $q->where('name', 'like', '%'.$request->input('search').'%');
             });
         }
+
+        if ($request->filled('status') && $request->input('status') !== 'All') {
+            $query->where('status', $request->input('status'));
+        }
+
 
         $sortField = $request->input('sort_field');
         $sortOrder = $request->input('sort_order');

@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         $user->assignRole('super-admin');
 
         // Create 10 software entries
-        Software::factory(10)->create([
+        Software::factory(21)->create([
             'user_id' => $user->id,
         ]);
     }

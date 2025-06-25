@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Software\ListSoftwareAction;
 use App\Http\Requests\SoftwareRequest;
 use App\Models\Software;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class SoftwareController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request, ListSoftwareAction $action): Response
     {
         $this->authorize('viewAny', Software::class);
 
-        return Software::all();
+        return Inertia::render('software/index', [
+            'software' => $action->execute($request),
+            'filters' => $request->only(['search', 'status', 'sort_field', 'sort_order', 'per_page']),
+            'permissions' => [
+                'create' => $request->user()->can('create-software'),
+                'update' => $request->user()->can('update-software'),
+                'delete' => $request->user()->can('delete-software'),
+            ],
+        ]);
     }
 
     public function store(SoftwareRequest $request)

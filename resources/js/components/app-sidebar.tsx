@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, GalleryVerticalEnd, House, MonitorSmartphone, SquarePen } from 'lucide-react';
+import { AppWindowMac, ChevronDown, ChevronRight, GalleryVerticalEnd, House, MonitorSmartphone, SquarePen } from 'lucide-react';
 import * as React from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -34,10 +34,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 items: [],
             },
             {
-                title: 'Devices',
+                title: 'Hardware',
                 href: route('device.index'),
                 isActive: currentRoute === 'device.index',
                 icon: MonitorSmartphone,
+                items: [],
+            },
+            {
+                title: 'Software',
+                icon: AppWindowMac,
+                href: route('software.index'),
+                isActive: currentRoute === 'software.index',
                 items: [],
             },
             {
