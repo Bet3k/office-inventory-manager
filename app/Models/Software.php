@@ -28,7 +28,6 @@ class Software extends Model
     use HasFactory;
     use HasUuids;
 
-
     protected $fillable = [
         'user_id',
         'name',

@@ -56,13 +56,6 @@ class SoftwareController extends Controller
         }
     }
 
-    public function show(Software $software)
-    {
-        $this->authorize('view', $software);
-
-        return $software;
-    }
-
     public function update(SoftwareRequest $request, Software $software, UpdateSoftwareAction $action): RedirectResponse
     {
         $this->authorize('update', $software);

@@ -22,34 +22,29 @@ class SoftwareRepository
      */
     public function all(Request $request): LengthAwarePaginator
     {
-        $query = Software::query();
-
-        $filters = ['name', 'status'];
-
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%'.$request->input('search').'%');
-            });
-        }
-
-        if ($request->filled('status') && $request->input('status') !== 'All') {
-            $query->where('status', $request->input('status'));
-        }
-
-
-        $sortField = $request->input('sort_field');
-        $sortOrder = $request->input('sort_order');
-
-        $allowedFields = $filters;
-        $allowedOrders = ['asc', 'desc'];
-
-        if (in_array($sortField, $allowedFields, true) && in_array($sortOrder, $allowedOrders, true)) {
-            $query->orderBy($sortField, $sortOrder);
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-
-        return $query->paginate($request->input('per_page'))->withQueryString();
+        return Software::query()
+            ->when(
+                $request->filled('search'),
+                fn ($q) => $q->where('name', 'like', '%' . $request->string('search')->value() . '%')
+            )
+            ->when(
+                $request->filled('status') && $request->string('status')->value() !== 'All',
+                fn ($q) => $q->where('status', $request->string('status')->value())
+            )
+            ->orderBy(
+                in_array($request->input('sort_field'), ['name', 'status'], true)
+                    ? $request->string('sort_field')->value()
+                    : 'created_at',
+                in_array($request->input('sort_order'), ['asc', 'desc'], true)
+                    ? $request->string('sort_order')->value()
+                    : 'desc'
+            )
+            ->paginate(
+                $request->filled('per_page')
+                    ? $request->integer('per_page')
+                    : 10
+            )
+            ->withQueryString();
     }
 
     /**
