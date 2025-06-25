@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Software;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\In;
 use Illuminate\Validation\Rules\Unique;
 
@@ -16,8 +18,15 @@ class SoftwareRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var Software|null $software */
+        $software = $this->route('software');
+
         return [
-            'name' => ['required', 'unique:software,name'],
+            'name' => ['required',
+                $software
+                    ? Rule::unique('software', 'name')->ignore($software->id)
+                    : Rule::unique('software', 'name'),
+            ],
             'status' => ['required'],
         ];
     }

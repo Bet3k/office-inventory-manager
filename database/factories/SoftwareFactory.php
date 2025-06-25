@@ -14,13 +14,13 @@ class SoftwareFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'status' => $this->faker->randomElement(['active', 'inactive']),
+            'name' => $this->faker->word(),
+            'status' => $this->faker->randomElement(['Active', 'In-Active']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

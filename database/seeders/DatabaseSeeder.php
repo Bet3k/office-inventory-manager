@@ -7,8 +7,10 @@ use App\Models\DeviceStaffMapping;
 use App\Models\MemberOfStaff;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Software;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -33,6 +35,7 @@ class DatabaseSeeder extends Seeder
         Device::factory(30)->create(['user_id' => $user->id]);
 
         // Create 20 devices explicitly Functional + Assigned
+        /** @var Collection<int, Device> $assignedDevices */
         $assignedDevices = Device::factory()
             ->count(20)
             ->assigned() // use the factory state
@@ -55,5 +58,10 @@ class DatabaseSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole('super-admin');
+
+        // Create 10 software entries
+        Software::factory(21)->create([
+            'user_id' => $user->id,
+        ]);
     }
 }
