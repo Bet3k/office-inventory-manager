@@ -20,7 +20,7 @@ class SoftwareFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'status' => $this->faker->randomElement(['active', 'inactive']),
+            'status' => $this->faker->randomElement(['Active', 'In-Active']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 
