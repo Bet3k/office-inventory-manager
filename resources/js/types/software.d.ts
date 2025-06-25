@@ -30,6 +30,7 @@ export interface PaginatedSoftwareInterface {
 
 export interface SoftwareInterfaceFilters {
     search: string | null;
+    status: string | null;
     per_page: string | null;
     sort_field: string | null;
     sort_order: string | null;

@@ -4,9 +4,10 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CreateUpdateSoftware from '@/pages/software/create-update-software';
+import DeleteSoftware from '@/pages/software/delete-software';
 import { Permissions } from '@/types/common';
-import { DeviceInterfaceFilters } from '@/types/device';
-import { PaginatedSoftwareInterface, SoftwareInterface } from '@/types/software';
+import { PaginatedSoftwareInterface, SoftwareInterface, SoftwareInterfaceFilters } from '@/types/software';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { clsx } from 'clsx';
 import { ArrowUpDown, X } from 'lucide-react';
@@ -15,7 +16,7 @@ function SoftwareList() {
     const pageProps = usePage().props;
     const software = pageProps.software as PaginatedSoftwareInterface;
     const permissions = pageProps.permissions as Permissions;
-    const filters: DeviceInterfaceFilters = pageProps.filters as DeviceInterfaceFilters;
+    const filters: SoftwareInterfaceFilters = pageProps.filters as SoftwareInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
         status: filters?.status || 'All',
@@ -71,7 +72,7 @@ function SoftwareList() {
                         <CardTitle>Software</CardTitle>
                         <CardDescription>List of all software</CardDescription>
                     </div>
-                    <CardAction></CardAction>
+                    <CardAction>{permissions.create && <CreateUpdateSoftware />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-end md:flex-row">
@@ -184,7 +185,10 @@ function SoftwareList() {
                                         {service.status}
                                     </Badge>
                                 </TableCell>
-                                <TableCell className="flex justify-end gap-2"></TableCell>
+                                <TableCell className="flex justify-end gap-2">
+                                    {permissions.update && <CreateUpdateSoftware software={service} />}
+                                    {permissions.delete && service.status === 'In-Active' && <DeleteSoftware software={service} />}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

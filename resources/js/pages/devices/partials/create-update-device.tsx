@@ -17,7 +17,7 @@ import { useForm } from '@inertiajs/react';
 import { Pen } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
-type StaffForm = {
+type DeviceForm = {
     brand: string;
     type: string;
     status: string;
@@ -27,7 +27,7 @@ type StaffForm = {
 
 function CreateUpdateDevice({ device }: { device?: DeviceInterface }) {
     const [open, setOpen] = useState(false);
-    const { data, setData, post, put, processing, reset, clearErrors } = useForm<Required<StaffForm>>({
+    const { data, setData, post, put, processing, reset, clearErrors } = useForm<Required<DeviceForm>>({
         brand: device?.brand || '',
         type: device?.type || '',
         status: device?.status || '',

@@ -14,7 +14,7 @@ import {
 import { MembersOfStaffInterface } from '@/types/members-of-staff';
 import { useForm } from '@inertiajs/react';
 import { Trash } from 'lucide-react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 
 type DeleteStaffForm = {
     password: string;
@@ -22,6 +22,7 @@ type DeleteStaffForm = {
 
 function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface }) {
     const [open, setOpen] = useState(false);
+    const passwordInput = useRef<HTMLInputElement>(null);
     const {
         data,
         setData,
@@ -40,6 +41,10 @@ function DeleteStaff({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface
             onSuccess: () => {
                 reset();
                 closeModal();
+            },
+            onError: () => {
+                reset();
+                passwordInput.current?.focus();
             },
         });
     };

@@ -11,15 +11,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { DeviceMappingInterface } from '@/types/device-mapping';
+import { SoftwareInterface } from '@/types/software';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef, useState } from 'react';
 
-type DeleteStaffForm = {
+type DeleteSoftwareForm = {
     password: string;
 };
 
-function ReturnDevice({ device }: { device: DeviceMappingInterface }) {
+function DeleteSoftware({ software }: { software: SoftwareInterface }) {
     const [open, setOpen] = useState(false);
     const passwordInput = useRef<HTMLInputElement>(null);
     const {
@@ -29,14 +29,14 @@ function ReturnDevice({ device }: { device: DeviceMappingInterface }) {
         processing,
         reset,
         clearErrors,
-    } = useForm<Required<DeleteStaffForm>>({
+    } = useForm<Required<DeleteSoftwareForm>>({
         password: '',
     });
 
     const handelSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('device-staff-mapping.destroy', device.mapping_id), {
+        destroy(route('software.destroy', software.id), {
             onSuccess: () => {
                 reset();
                 closeModal();
@@ -56,12 +56,12 @@ function ReturnDevice({ device }: { device: DeviceMappingInterface }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <span className="cursor-pointer text-red-400 hover:text-red-600 hover:underline">Return Device</span>
+                <span className="cursor-pointer text-red-400 hover:text-red-600 hover:underline">Delete</span>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handelSubmit}>
                     <DialogHeader>
-                        <DialogTitle>Return Device to stock</DialogTitle>
+                        <DialogTitle>Delete Software</DialogTitle>
                         <DialogDescription>Are you sure? This action cannot be undone. Enter password to confirm</DialogDescription>
                     </DialogHeader>
                     <div className="mt-3 mb-2 grid gap-4">
@@ -84,7 +84,7 @@ function ReturnDevice({ device }: { device: DeviceMappingInterface }) {
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <LoadingButton destructive={true} processing={processing} text="Return" tabIndex={2} fullWidth={false} />
+                        <LoadingButton destructive={true} processing={processing} text="Delete" tabIndex={2} fullWidth={false} />
                     </DialogFooter>
                 </form>
             </DialogContent>
@@ -92,4 +92,4 @@ function ReturnDevice({ device }: { device: DeviceMappingInterface }) {
     );
 }
 
-export default ReturnDevice;
+export default DeleteSoftware;

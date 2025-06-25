@@ -13,14 +13,15 @@ import {
 } from '@/components/ui/dialog';
 import { DeviceInterface } from '@/types/device';
 import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 
-type DeleteStaffForm = {
+type DeleteDeviceForm = {
     password: string;
 };
 
 function DeleteDevice({ device }: { device: DeviceInterface }) {
     const [open, setOpen] = useState(false);
+    const passwordInput = useRef<HTMLInputElement>(null);
     const {
         data,
         setData,
@@ -28,7 +29,7 @@ function DeleteDevice({ device }: { device: DeviceInterface }) {
         processing,
         reset,
         clearErrors,
-    } = useForm<Required<DeleteStaffForm>>({
+    } = useForm<Required<DeleteDeviceForm>>({
         password: '',
     });
 
@@ -39,6 +40,10 @@ function DeleteDevice({ device }: { device: DeviceInterface }) {
             onSuccess: () => {
                 reset();
                 closeModal();
+            },
+            onError: () => {
+                reset();
+                passwordInput.current?.focus();
             },
         });
     };
