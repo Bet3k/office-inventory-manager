@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\MemberStaff
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $updated_at
  *
  * @property-read User $user
+ * @property-read DeviceStaffMapping $staffDevices
  */
 class MemberOfStaff extends Model
 {
@@ -41,5 +43,20 @@ class MemberOfStaff extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function hasResources(): bool
+    {
+        return collect([
+            $this->staffDevices()->exists(),
+        ])->contains(true);
+    }
+
+    /**
+     * @return HasMany<DeviceStaffMapping, $this>
+     */
+    public function staffDevices(): HasMany
+    {
+        return $this->hasMany(DeviceStaffMapping::class);
     }
 }

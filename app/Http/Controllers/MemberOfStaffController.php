@@ -30,6 +30,11 @@ class MemberOfStaffController extends Controller
         return Inertia::render('member-of-staff/index', [
             'membersOfStaff' => $action->execute($request),
             'filters' => $request->only(['name', 'per_page', 'sort_field', 'sort_order']),
+            'permissions' => [
+                'create' => $request->user()->can('create-members_of_staff'),
+                'update' => $request->user()->can('update-members_of_staff'),
+                'delete' => $request->user()->can('delete-members_of_staff'),
+            ],
         ]);
     }
 
@@ -59,6 +64,16 @@ class MemberOfStaffController extends Controller
         return Inertia::render('member-of-staff/staff-details', [
             'memberOfStaff' => MemberOfStaffDto::fromModel($memberOfStaff)->toArray(),
             'deviceStaffMappings' => $action->execute($request, $memberOfStaff),
+            'hasResources' => $memberOfStaff->hasResources(),
+            'permissions' => [
+                'create' => $request->user()->can('create-members_of_staff'),
+                'update' => $request->user()->can('update-members_of_staff'),
+                'delete' => $request->user()->can('delete-members_of_staff'),
+            ],
+            'deviceAssignmentPermissions' => [
+                'create' => $request->user()->can('create-device_staff_mapping'),
+                'delete' => $request->user()->can('delete-device_staff_mapping'),
+            ],
         ]);
     }
 
@@ -90,6 +105,10 @@ class MemberOfStaffController extends Controller
         DeleteMemberOfStaffAction $action
     ): RedirectResponse {
         $this->authorize('delete', $memberOfStaff);
+
+        if ($memberOfStaff->hasResources()) {
+            return back()->with('error', 'Staff still has devices.');
+        }
 
         try {
             $action->execute($memberOfStaff);

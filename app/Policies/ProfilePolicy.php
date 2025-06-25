@@ -12,10 +12,6 @@ class ProfilePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user): bool
-    {
-        return $user->exists;
-    }
     public function view(User $user, Profile $profile): bool
     {
         return $user->id === $profile->user_id;

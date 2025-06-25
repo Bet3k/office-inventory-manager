@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -37,6 +38,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $updated_at
  *
  * @property-read Profile $profile
+ * @property-read Device $devices
+ * @property-read DeviceStaffMapping $deviceStaffMapping
  * @property-read ConnectedAccount $connectedAccounts
  * @property-read Collection<int, UserSession> $sessions
  */
@@ -47,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use HasUuids;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -100,6 +104,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return collect([
             $this->membersOfStaff()->exists(),
+            $this->devices()->exists(),
+            $this->deviceStaffMapping()->exists(),
         ])->contains(true);
     }
 
@@ -109,6 +115,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function membersOfStaff(): HasMany
     {
         return $this->hasMany(MemberOfStaff::class);
+    }
+
+    /**
+     * @return HasMany<Device, $this>
+     */
+    public function devices(): HasMany
+    {
+        return $this->hasMany(Device::class);
+    }
+
+    /**
+     * @return HasMany<DeviceStaffMapping, $this>
+     */
+    public function deviceStaffMapping(): HasMany
+    {
+        return $this->hasMany(DeviceStaffMapping::class);
     }
 
     /**

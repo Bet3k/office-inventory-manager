@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +15,18 @@ return new class () extends Migration {
             $table->foreignUuid('device_id')->constrained('devices');
             $table->timestamps();
         });
+
+        foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
+            Permission::create(['name' => "$action-device_staff_mapping"]);
+        }
     }
 
     public function down(): void
     {
+        foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
+            Permission::query()->where('name', "$action-device_staff_mapping")->delete();
+        }
+
         Schema::dropIfExists('device_staff_mappings');
     }
 };
