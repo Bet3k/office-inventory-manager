@@ -10,3 +10,13 @@ export interface PaginationLink {
     label: string;
     active: boolean;
 }
+
+export interface Permissions {
+    viewAny: boolean;
+    view: boolean;
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+    
+    [key: string]: unknown;
+}

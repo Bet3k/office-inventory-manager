@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import ReturnDevice from '@/pages/member-of-staff/partials/return-device';
+import { Permissions } from '@/types/common';
 import { DeviceMappingInterface, DeviceMappingInterfaceFilters, PaginatedDeviceMappingInterface } from '@/types/device-mapping';
 import { MembersOfStaffInterface } from '@/types/members-of-staff';
 import { router, useForm, usePage } from '@inertiajs/react';
@@ -11,6 +12,7 @@ import { ArrowUpDown, X } from 'lucide-react';
 
 function AssignedDevices({ devices, memberOfStaff }: { devices: PaginatedDeviceMappingInterface; memberOfStaff: MembersOfStaffInterface }) {
     const pageProps = usePage().props;
+    const deviceAssignmentPermissions = pageProps.deviceAssignmentPermissions as Permissions;
     const filters: DeviceMappingInterfaceFilters = pageProps.filters as DeviceMappingInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
@@ -150,7 +152,7 @@ function AssignedDevices({ devices, memberOfStaff }: { devices: PaginatedDeviceM
                                 <TableCell>{device.type}</TableCell>
                                 <TableCell>{device.serial_number}</TableCell>
                                 <TableCell className="flex justify-end gap-2">
-                                    <ReturnDevice device={device} />
+                                    {deviceAssignmentPermissions.delete && <ReturnDevice device={device} />}
                                 </TableCell>
                             </TableRow>
                         ))}

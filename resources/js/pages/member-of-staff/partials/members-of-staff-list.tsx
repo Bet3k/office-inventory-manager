@@ -4,12 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import CreateUpdateStaff from '@/pages/member-of-staff/partials/create-update-staff';
+import { Permissions } from '@/types/common';
 import { MembersOfStaffInterface, MembersOfStaffInterfaceFilters, PaginatedMembersOfStaffInterface } from '@/types/members-of-staff';
 import { Link, router, useForm, usePage } from '@inertiajs/react';
 import { ArrowUpDown, X } from 'lucide-react';
 
 function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembersOfStaffInterface }) {
     const pageProps = usePage().props;
+    const permissions = pageProps.permissions as Permissions;
     const filters: MembersOfStaffInterfaceFilters = pageProps.filters as MembersOfStaffInterfaceFilters;
     const { data, setData } = useForm({
         name: filters?.name || '',
@@ -64,9 +66,7 @@ function MembersOfStaffList({ membersOfStaff }: { membersOfStaff: PaginatedMembe
                         <CardTitle>Members of Staff</CardTitle>
                         <CardDescription>List of all active members of staff</CardDescription>
                     </div>
-                    <CardAction>
-                        <CreateUpdateStaff />
-                    </CardAction>
+                    <CardAction>{permissions.create && <CreateUpdateStaff />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-between md:flex-row">

@@ -8,25 +8,25 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('member_of_staff', function (Blueprint $table) {
+        Schema::create('software', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
+            $table->string('status');
             $table->timestamps();
         });
 
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::create(['name' => "$action-member_of_staff"]);
+            Permission::create(['name' => "$action-software"]);
         }
     }
 
     public function down(): void
     {
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::query()->where('name', "$action-member_of_staff")->delete();
+            Permission::query()->where('name', "$action-software")->delete();
         }
 
-        Schema::dropIfExists('member_of_staff');
+        Schema::dropIfExists('software');
     }
 };

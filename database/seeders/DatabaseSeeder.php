@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Device;
 use App\Models\DeviceStaffMapping;
 use App\Models\MemberOfStaff;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -45,5 +47,13 @@ class DatabaseSeeder extends Seeder
                     'member_of_staff_id' => $staff->random()->id,
                 ]);
         }
+
+        $role = Role::create(['name' => 'super-admin']);
+
+        $permissions = Permission::all();
+
+        $role->syncPermissions($permissions);
+
+        $user->assignRole('super-admin');
     }
 }
