@@ -4,13 +4,16 @@ import AssignedDevices from '@/pages/member-of-staff/partials/assigned-devices';
 import CreateUpdateStaff from '@/pages/member-of-staff/partials/create-update-staff';
 import DeleteStaff from '@/pages/member-of-staff/partials/delete-staff';
 import type { BreadcrumbItem } from '@/types';
+import { Permissions } from '@/types/common';
 import { PaginatedDeviceInterface } from '@/types/device';
 import { MembersOfStaffInterface } from '@/types/members-of-staff';
 import { Head, usePage } from '@inertiajs/react';
 
 export default function StaffDetails({ memberOfStaff }: { memberOfStaff: MembersOfStaffInterface }) {
     const pageProps = usePage().props;
+    const permissions = pageProps.permissions as Permissions;
     const deviceStaffMappings = pageProps.deviceStaffMappings as PaginatedDeviceInterface;
+    const hasResources = pageProps.hasResources as boolean;
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -31,8 +34,9 @@ export default function StaffDetails({ memberOfStaff }: { memberOfStaff: Members
                         {memberOfStaff.first_name} {memberOfStaff.last_name}
                     </CardTitle>
                     <CardAction className="flex gap-2">
-                        <CreateUpdateStaff memberOfStaff={memberOfStaff} />
-                        <DeleteStaff memberOfStaff={memberOfStaff} />
+                        {permissions.update && <CreateUpdateStaff memberOfStaff={memberOfStaff} />}
+
+                        {permissions.delete && !hasResources && <DeleteStaff memberOfStaff={memberOfStaff} />}
                     </CardAction>
                 </CardHeader>
                 <CardContent>
