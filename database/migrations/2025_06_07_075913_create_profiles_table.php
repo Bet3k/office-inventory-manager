@@ -17,14 +17,14 @@ return new class () extends Migration {
         });
 
         foreach (['create', 'view', 'viewAny', 'update', 'delete'] as $action) {
-            Permission::create(['name' => "$action-users"]);
+            Permission::create(['name' => "$action-user"]);
         }
     }
 
     public function down(): void
     {
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::query()->where('name', "$action-users")->delete();
+            Permission::query()->where('name', "$action-user")->delete();
         }
 
         Schema::dropIfExists('profiles');

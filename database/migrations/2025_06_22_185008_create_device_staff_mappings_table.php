@@ -17,14 +17,14 @@ return new class () extends Migration {
         });
 
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::create(['name' => "$action-device_staff_mappings"]);
+            Permission::create(['name' => "$action-device_staff_mapping"]);
         }
     }
 
     public function down(): void
     {
         foreach (['view', 'viewAny', 'create', 'update', 'delete'] as $action) {
-            Permission::query()->where('name', "$action-device_staff_mappings")->delete();
+            Permission::query()->where('name', "$action-device_staff_mapping")->delete();
         }
 
         Schema::dropIfExists('device_staff_mappings');

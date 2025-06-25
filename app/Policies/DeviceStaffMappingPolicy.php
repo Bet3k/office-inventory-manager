@@ -42,7 +42,7 @@ class DeviceStaffMappingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-device_staff_mappings');
+        return $user->can('create-device_staff_mapping');
     }
 
     /**
@@ -54,7 +54,7 @@ class DeviceStaffMappingPolicy
      */
     public function update(User $user): bool
     {
-        return $user->can('update-device_staff_mappings');
+        return $user->can('update-device_staff_mapping');
     }
 
     /**
@@ -66,6 +66,6 @@ class DeviceStaffMappingPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->can('delete-device_staff_mappings');
+        return $user->can('delete-device_staff_mapping');
     }
 }

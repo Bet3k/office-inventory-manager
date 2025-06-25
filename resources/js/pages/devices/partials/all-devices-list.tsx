@@ -16,6 +16,7 @@ import { ArrowUpDown, X } from 'lucide-react';
 function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
     const pageProps = usePage().props;
     const permissions = pageProps.permissions as Permissions;
+    const deviceAssignmentPermissions = pageProps.deviceAssignmentPermissions as Permissions;
     const filters: DeviceInterfaceFilters = pageProps.filters as DeviceInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
@@ -192,8 +193,9 @@ function AllDevicesList({ devices }: { devices: PaginatedDeviceInterface }) {
                                 </TableCell>
                                 <TableCell>{device.serial_number}</TableCell>
                                 <TableCell className="flex justify-end gap-2">
-                                    {device.service_status === 'Available' && device.status === 'Functional' && <AssignDevice device={device} />}
-                                    {/*TODO: Extend permissions interface to include assign permission*/}
+                                    {deviceAssignmentPermissions.create &&
+                                        device.service_status === 'Available' &&
+                                        device.status === 'Functional' && <AssignDevice device={device} />}
                                     {permissions.update && <CreateUpdateDevice device={device} />}
                                     {permissions.delete && ['Available', 'Decommissioned'].includes(device.service_status) && (
                                         <DeleteDevice device={device} />

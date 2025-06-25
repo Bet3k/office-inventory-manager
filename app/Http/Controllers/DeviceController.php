@@ -31,10 +31,14 @@ class DeviceController extends Controller
             'devices' => $action->execute($request),
             'staffs' => MemberOfStaff::query()->get(),
             'permissions' => [
-                'assign' => $request->user()->can('assign-devices'),
-                'create' => $request->user()->can('create-devices'),
-                'update' => $request->user()->can('update-devices'),
-                'delete' => $request->user()->can('delete-devices'),
+                'assign' => $request->user()->can('assign-device'),
+                'create' => $request->user()->can('create-device'),
+                'update' => $request->user()->can('update-device'),
+                'delete' => $request->user()->can('delete-device'),
+            ],
+            'deviceAssignmentPermissions' => [
+                'create' => $request->user()->can('create-device_staff_mapping'),
+                'delete' => $request->user()->can('delete-device_staff_mapping'),
             ],
             'filters' => $request->only([
                 'brand',
