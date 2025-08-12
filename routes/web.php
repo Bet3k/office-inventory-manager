@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceStaffMappingController;
 use App\Http\Controllers\MemberOfStaffController;
+use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SoftwareController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('software', SoftwareController::class);
 });
+
+Route::get('questionnaire', [QuestionnaireController::class, 'create'])->name('questionnaire.create');
+Route::post('questionnaire', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
 
 Route::get('/auth/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
     ->name('google.callback');
