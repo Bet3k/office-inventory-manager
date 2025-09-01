@@ -42,7 +42,7 @@ class SoftwareRepository
             ->paginate(
                 $request->filled('per_page')
                     ? $request->integer('per_page')
-                    : 10
+                    : 15
             )
             ->withQueryString();
     }

@@ -25,31 +25,8 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()
             ->create([
                 'password' => 'Password1#',
-                'email' => 'test@example.com',
+                'email' => 'isaac.hatilima@bet3000-entertainment.de',
             ]);
-
-        /** @var MemberOfStaff $staff */
-        $staff = MemberOfStaff::factory(4)->create(['user_id' => $user->id]);
-
-        // Create 30 general devices (mixed statuses)
-        Device::factory(30)->create(['user_id' => $user->id]);
-
-        // Create 20 devices explicitly Functional + Assigned
-        /** @var Collection<int, Device> $assignedDevices */
-        $assignedDevices = Device::factory()
-            ->count(20)
-            ->assigned() // use the factory state
-            ->create(['user_id' => $user->id]);
-
-        // Assign those to staff
-        foreach ($assignedDevices as $device) {
-            DeviceStaffMapping::factory()
-                ->create([
-                    'user_id' => $user->id,
-                    'device_id' => $device->id,
-                    'member_of_staff_id' => $staff->random()->id,
-                ]);
-        }
 
         $role = Role::create(['name' => 'super-admin']);
 
@@ -59,9 +36,7 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('super-admin');
 
-        // Create 10 software entries
-        Software::factory(21)->create([
-            'user_id' => $user->id,
-        ]);
+        // Seed Starting Software
+        $this->callWith(SoftwareSeeder::class, ['userId' => $user->id]);
     }
 }
