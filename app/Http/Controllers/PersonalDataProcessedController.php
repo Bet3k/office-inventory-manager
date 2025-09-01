@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PersonalDataProcessed\CreatePersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\ListPersonalDataProcessedAction;
+use App\Dtos\PersonalDataProcessedDto;
+use App\Dtos\SoftwareDto;
 use App\Http\Requests\PersonalDataProcessedRequest;
 use App\Models\PersonalDataProcessed;
+use App\Models\Software;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class PersonalDataProcessedController extends Controller
 {
@@ -29,11 +36,25 @@ class PersonalDataProcessedController extends Controller
         ]);
     }
 
-    public function store(PersonalDataProcessedRequest $request)
-    {
+    public function store(
+        PersonalDataProcessedRequest $request,
+        CreatePersonalDataProcessedAction $action
+    ): RedirectResponse {
         $this->authorize('create', PersonalDataProcessed::class);
 
-        return PersonalDataProcessed::create($request->validated());
+        $dto = PersonalDataProcessedDto::fromRequest($request);
+
+        try {
+            $action->execute($dto);
+            return back()->with('success', 'Personal Data Processed created successfully.');
+        } catch (Throwable $e) {
+            Log::error('Personal Data Processed creation failed.', [
+                'exception' => $e,
+                'personal_data_processed_id' => null,
+                'user_id' => $request->user()->id,
+            ]);
+            return back()->with('error', 'Failed to create Personal Data Processed. Please try again.');
+        }
     }
 
     public function show(PersonalDataProcessed $personalDataProcessed)

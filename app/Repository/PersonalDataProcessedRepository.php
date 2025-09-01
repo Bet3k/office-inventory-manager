@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 class PersonalDataProcessedRepository
 {
     /**
-     * Get all software.
-     *
      * @param  Request  $request
      *
      * @return LengthAwarePaginator<int, PersonalDataProcessed>
@@ -36,5 +34,17 @@ class PersonalDataProcessedRepository
                     : 15
             )
             ->withQueryString();
+    }
+
+    /**
+     * @param  PersonalDataProcessed  $personalDataProcessed
+     *
+     * @return PersonalDataProcessed
+     */
+    public function save(PersonalDataProcessed $personalDataProcessed): PersonalDataProcessed
+    {
+        $personalDataProcessed->save();
+
+        return $personalDataProcessed->refresh();
     }
 }

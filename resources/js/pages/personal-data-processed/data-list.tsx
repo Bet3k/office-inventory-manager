@@ -14,6 +14,7 @@ import {
     PersonalDataProcessedInterface,
     PersonalDataProcessedInterfaceFilters,
 } from '@/types/personal-data-processed';
+import CreateUpdatePdp from '@/pages/personal-data-processed/create-update-pdp';
 
 function DataList() {
     const pageProps = usePage().props;
@@ -73,7 +74,7 @@ function DataList() {
                         <CardTitle>Personal Data Processed</CardTitle>
                         <CardDescription>List of all Personal Data Processed</CardDescription>
                     </div>
-                    <CardAction>{permissions.create && <CreateUpdateSoftware />}</CardAction>
+                    <CardAction>{permissions.create && <CreateUpdatePdp />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-end md:flex-row">
