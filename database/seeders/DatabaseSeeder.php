@@ -36,7 +36,9 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('super-admin');
 
-        // Seed Starting Software
+        // Seed Software
         $this->callWith(SoftwareSeeder::class, ['userId' => $user->id]);
+        // Persona Data Processed
+        $this->callWith(PersonalDataProcessedSeeder::class, ['userId' => $user->id]);
     }
 }

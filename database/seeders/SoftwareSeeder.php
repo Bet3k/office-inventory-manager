@@ -11,7 +11,7 @@ class SoftwareSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run($userId = null): void
+    public function run(string $userId = null): void
     {
         if (!$userId) {
             $this->command->warn('No user ID provided. Skipping software seeding.');
@@ -42,7 +42,7 @@ class SoftwareSeeder extends Seeder
         ];
 
         foreach ($softwareList as $name) {
-            Software::create([
+            Software::query()->create([
                                  'name' => $name,
                                  'status' => 'Active',
                                  'user_id' => $userId,

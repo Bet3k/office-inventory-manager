@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceStaffMappingController;
 use App\Http\Controllers\MemberOfStaffController;
+use App\Http\Controllers\PersonalDataProcessedController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SoftwareController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('device-staff-mapping', DeviceStaffMappingController::class);
 
     Route::resource('software', SoftwareController::class);
+
+    Route::resource('personal-data-processed', PersonalDataProcessedController::class);
 });
 
 Route::get('questionnaire', [QuestionnaireController::class, 'create'])->name('questionnaire.create');
