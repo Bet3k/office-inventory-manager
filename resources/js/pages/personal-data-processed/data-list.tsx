@@ -15,6 +15,7 @@ import {
     PersonalDataProcessedInterfaceFilters,
 } from '@/types/personal-data-processed';
 import CreateUpdatePdp from '@/pages/personal-data-processed/create-update-pdp';
+import DeletePdp from '@/pages/personal-data-processed/delete-pdp';
 
 function DataList() {
     const pageProps = usePage().props;
@@ -151,7 +152,7 @@ function DataList() {
 
                                 <TableCell className="flex justify-end gap-2">
                                     {permissions.update && <CreateUpdatePdp personalDataProcessed={data_type} />}
-                                    {/*{permissions.delete && data_type.status === 'In-Active' && <DeleteSoftware personal_data_processed={data_type} />}*/}
+                                    {permissions.delete && <DeletePdp personalDataProcessed={data_type} />}
                                 </TableCell>
                             </TableRow>
                         ))}

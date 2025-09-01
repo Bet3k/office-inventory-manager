@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\PersonalDataProcessed\CreatePersonalDataProcessedAction;
+use App\Actions\PersonalDataProcessed\DeletePersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\ListPersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\UpdatePersonalDataProcessedAction;
 use App\Dtos\PersonalDataProcessedDto;
 use App\Dtos\SoftwareDto;
+use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\PersonalDataProcessedRequest;
 use App\Models\PersonalDataProcessed;
 use App\Models\Software;
@@ -81,12 +83,23 @@ class PersonalDataProcessedController extends Controller
         }
     }
 
-    public function destroy(PersonalDataProcessed $personalDataProcessed)
-    {
+    public function destroy(
+        CurrentPasswordRequest $request,
+        PersonalDataProcessed $personalDataProcessed,
+        DeletePersonalDataProcessedAction $action
+    ): RedirectResponse {
         $this->authorize('delete', $personalDataProcessed);
 
-        $personalDataProcessed->delete();
-
-        return response()->json();
+        try {
+            $action->execute($personalDataProcessed);
+            return back()->with('success', 'Personal Data Processed deleted successfully.');
+        } catch (Throwable $e) {
+            Log::error('Personal Data Processed deletion failed.', [
+                'exception' => $e,
+                'software_id' => $personalDataProcessed->id,
+                'user_id' => $request->user()->id,
+            ]);
+            return back()->with('error', 'Failed to delete Personal Data Processed. Please try again.');
+        }
     }
 }

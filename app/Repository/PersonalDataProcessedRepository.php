@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\PersonalDataProcessed;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
@@ -46,5 +47,17 @@ class PersonalDataProcessedRepository
         $personalDataProcessed->save();
 
         return $personalDataProcessed->refresh();
+    }
+
+    /**
+     * @param  PersonalDataProcessed  $personalDataProcessed
+     *
+     * @return bool|null
+     *
+     * @throws Exception
+     */
+    public function delete(PersonalDataProcessed $personalDataProcessed): ?bool
+    {
+        return $personalDataProcessed->delete();
     }
 }

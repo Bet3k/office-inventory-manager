@@ -4,9 +4,7 @@ namespace App\Dtos;
 
 use App\Contracts\DtoContract;
 use App\Http\Requests\PersonalDataProcessedRequest;
-use App\Http\Requests\SoftwareRequest;
 use App\Models\PersonalDataProcessed;
-use App\Models\Software;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
