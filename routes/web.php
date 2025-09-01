@@ -36,6 +36,6 @@ Route::post('questionnaire', [QuestionnaireController::class, 'store'])->name('q
 Route::get('/auth/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
     ->name('google.callback');
 
-require __DIR__.'/web/user_manager.php';
+require __DIR__ . '/web/user_manager.php';
 
 require __DIR__ . '/web/auth.php';

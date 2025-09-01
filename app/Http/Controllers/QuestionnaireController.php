@@ -11,8 +11,7 @@ class QuestionnaireController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
-        dd($request);
-        // Questionnaire::create($request->all());
+        Questionnaire::create($request->all());
 
         return redirect()->route('questionnaire.create');
     }
