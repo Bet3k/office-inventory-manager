@@ -150,7 +150,7 @@ function DataList() {
                                 <TableCell className="font-medium">{data_type.name}</TableCell>
 
                                 <TableCell className="flex justify-end gap-2">
-                                    {/*{permissions.update && <CreateUpdateSoftware personal_data_processed={data_type} />}*/}
+                                    {permissions.update && <CreateUpdatePdp personalDataProcessed={data_type} />}
                                     {/*{permissions.delete && data_type.status === 'In-Active' && <DeleteSoftware personal_data_processed={data_type} />}*/}
                                 </TableCell>
                             </TableRow>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\PersonalDataProcessed\CreatePersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\ListPersonalDataProcessedAction;
+use App\Actions\PersonalDataProcessed\UpdatePersonalDataProcessedAction;
 use App\Dtos\PersonalDataProcessedDto;
 use App\Dtos\SoftwareDto;
 use App\Http\Requests\PersonalDataProcessedRequest;
@@ -57,20 +58,27 @@ class PersonalDataProcessedController extends Controller
         }
     }
 
-    public function show(PersonalDataProcessed $personalDataProcessed)
-    {
-        $this->authorize('view', $personalDataProcessed);
 
-        return $personalDataProcessed;
-    }
-
-    public function update(PersonalDataProcessedRequest $request, PersonalDataProcessed $personalDataProcessed)
-    {
+    public function update(
+        PersonalDataProcessedRequest $request,
+        PersonalDataProcessed $personalDataProcessed,
+        UpdatePersonalDataProcessedAction $action
+    ): RedirectResponse {
         $this->authorize('update', $personalDataProcessed);
 
-        $personalDataProcessed->update($request->validated());
+        $dto = PersonalDataProcessedDto::fromRequest($request);
 
-        return $personalDataProcessed;
+        try {
+            $action->execute($dto, $personalDataProcessed);
+            return back()->with('success', 'Personal Data Processed updated successfully.');
+        } catch (Throwable $e) {
+            Log::error('Personal Data Processed update failed.', [
+                'exception' => $e,
+                'software_id' => $personalDataProcessed->id,
+                'user_id' => $request->user()->id,
+            ]);
+            return back()->with('error', 'Failed to update Personal Data Processed. Please try again.');
+        }
     }
 
     public function destroy(PersonalDataProcessed $personalDataProcessed)
