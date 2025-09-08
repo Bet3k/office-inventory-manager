@@ -14,7 +14,7 @@ class PersonalDataTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'data_type' => $this->faker->word(),
+            'data_type' => $this->faker->unique()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

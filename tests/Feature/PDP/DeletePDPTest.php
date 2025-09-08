@@ -6,7 +6,7 @@ use Inertia\Testing\AssertableInertia as Assert;
 test('personal data processed can be deleted', function () {
     $user = createUser();
 
-    $software = PersonalDataProcessed::factory()->create([
+    $personalDP = PersonalDataProcessed::factory()->create([
                                                 'name' => 'Word',
                                                 'user_id' => $user->id
                                             ]);
@@ -25,7 +25,7 @@ test('personal data processed can be deleted', function () {
     $this
         ->actingAs($user)
         ->followingRedirects()
-        ->delete(route('personal-data-processed.destroy', $software->id), [
+        ->delete(route('personal-data-processed.destroy', $personalDP->id), [
             'password' => 'Password1#',
         ])
         ->assertInertia(
@@ -38,7 +38,7 @@ test('personal data processed can be deleted', function () {
 test('personal data processed cannot be deleted with wrong password', function () {
     $user = createUser();
 
-    $software = PersonalDataProcessed::factory()->create([
+    $personalDP = PersonalDataProcessed::factory()->create([
                                                 'name' => 'Names',
                                                 'user_id' => $user->id
                                             ]);
@@ -57,7 +57,7 @@ test('personal data processed cannot be deleted with wrong password', function (
     $this
         ->actingAs($user)
         ->followingRedirects()
-        ->delete(route('personal-data-processed.destroy', $software->id), [
+        ->delete(route('personal-data-processed.destroy', $personalDP->id), [
             'password' => 'wong-password-123',
         ])
         ->assertInertia(
