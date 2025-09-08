@@ -1,24 +1,24 @@
-import PaginatedFooter from '@/components/paginated-footer';
+import React from 'react';
+import { router, useForm, usePage } from '@inertiajs/react';
+import {
+    PaginatedPersonalDataTypeInterface, PersonalDataTypeInterface,
+    PersonalDataTypeInterfaceFilters
+} from '@/types/personal-data-types';
+import { Permissions } from '@/types/common';
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Permissions } from '@/types/common';
-import { router, useForm, usePage } from '@inertiajs/react';
 import { ArrowUpDown, X } from 'lucide-react';
-import {
-    PaginatedPersonalDataProcessedInterface,
-    PersonalDataProcessedInterface,
-    PersonalDataProcessedInterfaceFilters,
-} from '@/types/personal-data-processed';
-import CreateUpdatePdp from '@/pages/personal-data-processed/create-update-pdp';
-import DeletePdp from '@/pages/personal-data-processed/delete-pdp';
+import { Input } from '@/components/ui/input';
+import PaginatedFooter from '@/components/paginated-footer';
+import CreateUpdatePdt from '@/pages/personal-data-type/create-update-pdt';
+import DeletePdt from '@/pages/personal-data-type/delete-pdt';
 
-function DataList() {
+function DataTypesList() {
     const pageProps = usePage().props;
-    const personal_data_processed = pageProps.personal_data_processed as PaginatedPersonalDataProcessedInterface;
+    const personal_data_type = pageProps.personal_data_type as PaginatedPersonalDataTypeInterface;
     const permissions = pageProps.permissions as Permissions;
-    const filters: PersonalDataProcessedInterfaceFilters = pageProps.filters as PersonalDataProcessedInterfaceFilters;
+    const filters: PersonalDataTypeInterfaceFilters = pageProps.filters as PersonalDataTypeInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
         per_page: filters?.per_page || '15',
@@ -26,9 +26,9 @@ function DataList() {
         sort_field: filters?.sort_field || '',
     });
 
-    const filterPersonalData = (overrides: Partial<typeof data>) => {
+    const filterPersonalType = (overrides: Partial<typeof data>) => {
         router.get(
-            route('personal-data-processed.index'),
+            route('personal-data-type.index'),
             {
                 search: data.search,
                 per_page: data.per_page,
@@ -43,7 +43,7 @@ function DataList() {
         );
     };
 
-    const handleSort = (field: 'name') => {
+    const handleSort = (field: 'data_type') => {
         let order: 'asc' | 'desc' | '' = 'asc';
 
         if (data.sort_field === field) {
@@ -58,7 +58,7 @@ function DataList() {
             sort_order: order,
         });
 
-        filterPersonalData({
+        filterPersonalType({
             sort_field: order ? field : '',
             sort_order: order,
         });
@@ -69,10 +69,10 @@ function DataList() {
             <CardHeader className="flex w-full flex-col">
                 <div className="mb-3 flex w-full justify-between">
                     <div>
-                        <CardTitle>Personal Data Processed</CardTitle>
-                        <CardDescription>List of all Personal Data Processed</CardDescription>
+                        <CardTitle>Personal Data Type</CardTitle>
+                        <CardDescription>List of all Personal Data Type</CardDescription>
                     </div>
-                    <CardAction>{permissions.create && <CreateUpdatePdp />}</CardAction>
+                    <CardAction>{permissions.create && <CreateUpdatePdt />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-end md:flex-row">
@@ -80,7 +80,7 @@ function DataList() {
                         value={data.per_page}
                         onValueChange={(value) => {
                             setData('per_page', value);
-                            filterPersonalData({ per_page: value });
+                            filterPersonalType({ per_page: value });
                         }}
                     >
                         <SelectTrigger className="mt-1 max-w-20">
@@ -103,7 +103,7 @@ function DataList() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead onClick={() => handleSort('name')} className="cursor-pointer">
+                            <TableHead onClick={() => handleSort('data_type')} className="cursor-pointer">
                                 <div className="flex items-center gap-1">
                                     Name
                                     <ArrowUpDown size={15} className={data.sort_field === 'name' ? 'text-black' : 'text-gray-500'} />
@@ -121,9 +121,9 @@ function DataList() {
                                         onChange={(e) => {
                                             const value = e.target.value;
                                             setData('search', value);
-                                            filterPersonalData({ search: value });
+                                            filterPersonalType({ search: value });
                                         }}
-                                        placeholder="Search Personal Data Processed"
+                                        placeholder="Search Personal Type Processed"
                                         className="pr-10"
                                     />
                                     {data.search && (
@@ -131,7 +131,7 @@ function DataList() {
                                             type="button"
                                             onClick={() => {
                                                 setData('search', '');
-                                                filterPersonalData({ search: '' });
+                                                filterPersonalType({ search: '' });
                                             }}
                                             className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                         >
@@ -143,13 +143,13 @@ function DataList() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {personal_data_processed.data.map((data_type: PersonalDataProcessedInterface) => (
+                        {personal_data_type.data.map((data_type: PersonalDataTypeInterface) => (
                             <TableRow key={data_type.id} className="even:bg-muted">
-                                <TableCell className="font-medium">{data_type.name}</TableCell>
+                                <TableCell className="font-medium">{data_type.data_type}</TableCell>
 
                                 <TableCell className="flex justify-end gap-2">
-                                    {permissions.update && <CreateUpdatePdp personalDataProcessed={data_type} />}
-                                    {permissions.delete && <DeletePdp personalDataProcessed={data_type} />}
+                                    {permissions.update && <CreateUpdatePdt personalDataType={data_type} />}
+                                    {permissions.delete && <DeletePdt personalDataType={data_type} />}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -157,10 +157,10 @@ function DataList() {
                 </Table>
             </CardContent>
             <CardFooter>
-                <PaginatedFooter paginator={personal_data_processed} />
+                <PaginatedFooter paginator={personal_data_type} />
             </CardFooter>
         </Card>
     );
 }
 
-export default DataList;
+export default DataTypesList;

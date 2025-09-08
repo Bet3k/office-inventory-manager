@@ -1,20 +1,20 @@
-import Layout from '@/layouts/app-layout';
+import Layout from '@/layouts/app-layout'
+import { Head } from '@inertiajs/react'
 import type { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
-import DataList from '@/pages/personal-data-processed/data-list';
+import DataTypesList from '@/pages/personal-data-type/data-types-list';
 
 export default function Index() {
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Personal Data Processed',
-            href: route('personal-data-processed.index'),
+            title: 'Personal Data Type',
+            href: route('personal-data-type.index'),
         },
     ];
     return (
         <Layout breadcrumbs={breadcrumbs}>
             <Head title="Personal Data Processed" />
 
-            <DataList />
+            <DataTypesList />
         </Layout>
     );
 }

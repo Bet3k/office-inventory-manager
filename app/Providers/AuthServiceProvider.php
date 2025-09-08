@@ -9,6 +9,7 @@ use App\Models\Device;
 use App\Models\DeviceStaffMapping;
 use App\Models\MemberOfStaff;
 use App\Models\PersonalDataProcessed;
+use App\Models\PersonalDataType;
 use App\Models\Profile;
 use App\Models\Questionnaire;
 use App\Models\Software;
@@ -18,6 +19,7 @@ use App\Policies\DevicePolicy;
 use App\Policies\DeviceStaffMappingPolicy;
 use App\Policies\MemberOfStaffPolicy;
 use App\Policies\PersonalDataProcessedPolicy;
+use App\Policies\PersonalDataTypePolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\QuestionnairePolicy;
 use App\Policies\SoftwarePolicy;
@@ -37,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Software::class => SoftwarePolicy::class,
         Questionnaire::class => QuestionnairePolicy::class,
         PersonalDataProcessed::class => PersonalDataProcessedPolicy::class,
+        PersonalDataType::class => PersonalDataTypePolicy::class,
     ];
 
     /**

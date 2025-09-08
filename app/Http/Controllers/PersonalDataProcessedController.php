@@ -7,11 +7,9 @@ use App\Actions\PersonalDataProcessed\DeletePersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\ListPersonalDataProcessedAction;
 use App\Actions\PersonalDataProcessed\UpdatePersonalDataProcessedAction;
 use App\Dtos\PersonalDataProcessedDto;
-use App\Dtos\SoftwareDto;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\PersonalDataProcessedRequest;
 use App\Models\PersonalDataProcessed;
-use App\Models\Software;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -76,7 +74,7 @@ class PersonalDataProcessedController extends Controller
         } catch (Throwable $e) {
             Log::error('Personal Data Processed update failed.', [
                 'exception' => $e,
-                'software_id' => $personalDataProcessed->id,
+                'personal_data_processed_id' => $personalDataProcessed->id,
                 'user_id' => $request->user()->id,
             ]);
             return back()->with('error', 'Failed to update Personal Data Processed. Please try again.');
@@ -96,7 +94,7 @@ class PersonalDataProcessedController extends Controller
         } catch (Throwable $e) {
             Log::error('Personal Data Processed deletion failed.', [
                 'exception' => $e,
-                'software_id' => $personalDataProcessed->id,
+                'personal_data_processed_id' => $personalDataProcessed->id,
                 'user_id' => $request->user()->id,
             ]);
             return back()->with('error', 'Failed to delete Personal Data Processed. Please try again.');

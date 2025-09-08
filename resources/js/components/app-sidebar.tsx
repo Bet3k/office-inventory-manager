@@ -1,4 +1,14 @@
-import { AppWindowMac, ChevronDown, ChevronRight, FileUser, GalleryVerticalEnd, House, MonitorSmartphone, SquarePen } from 'lucide-react';
+import {
+    AppWindowMac,
+    ChevronDown,
+    ChevronRight,
+    ClipboardType,
+    FileUser,
+    GalleryVerticalEnd,
+    House,
+    MonitorSmartphone,
+    SquarePen,
+} from 'lucide-react';
 import * as React from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -52,6 +62,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 icon: FileUser,
                 href: route('personal-data-processed.index'),
                 isActive: currentRoute === 'personal-data-processed.index',
+                items: [],
+            },
+            {
+                title: 'Personal Data Type',
+                icon: ClipboardType,
+                href: route('personal-data-type.index'),
+                isActive: currentRoute === 'personal-data-type.index',
                 items: [],
             },
             {

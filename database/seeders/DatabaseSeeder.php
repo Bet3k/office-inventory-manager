@@ -2,15 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Device;
-use App\Models\DeviceStaffMapping;
-use App\Models\MemberOfStaff;
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\Software;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Collection;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -40,5 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->callWith(SoftwareSeeder::class, ['userId' => $user->id]);
         // Persona Data Processed
         $this->callWith(PersonalDataProcessedSeeder::class, ['userId' => $user->id]);
+        // Persona Data Type
+        $this->callWith(PersonalDataTypeSeeder::class, ['userId' => $user->id]);
     }
 }

@@ -17,8 +17,6 @@ class ListPersonalDataProcessedAction
     }
 
     /**
-     * Returns paginated, filtered list of devices
-     *
      * @param  Request  $request
      *
      * @return LengthAwarePaginator<int, PersonalDataProcessed>

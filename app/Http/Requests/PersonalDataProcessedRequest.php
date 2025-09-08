@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PersonalDataProcessed;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PersonalDataProcessedRequest extends FormRequest
@@ -11,8 +13,16 @@ class PersonalDataProcessedRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var PersonalDataProcessed $processedData */
+        $processedData = $this->route('personal_data_processed');
+
         return [
-            'name' => ['required'],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique(PersonalDataProcessed::class, 'name')
+                    ->ignore(optional($processedData)->id),
+            ],
         ];
     }
 
