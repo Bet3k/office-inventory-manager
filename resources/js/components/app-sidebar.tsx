@@ -1,5 +1,6 @@
 import {
     AppWindowMac,
+    Briefcase,
     ChevronDown,
     ChevronRight,
     ClipboardType,
@@ -69,6 +70,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 icon: ClipboardType,
                 href: route('personal-data-type.index'),
                 isActive: currentRoute === 'personal-data-type.index',
+                items: [],
+            },
+            {
+                title: 'Department',
+                icon: Briefcase,
+                href: route('department.index'),
+                isActive: currentRoute === 'department.index',
                 items: [],
             },
             {

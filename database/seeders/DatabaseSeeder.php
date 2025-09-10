@@ -37,5 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->callWith(PersonalDataProcessedSeeder::class, ['userId' => $user->id]);
         // Persona Data Type
         $this->callWith(PersonalDataTypeSeeder::class, ['userId' => $user->id]);
+        # Department
+        $this->callWith(DepartmentSeeder::class, ['userId' => $user->id]);
     }
 }

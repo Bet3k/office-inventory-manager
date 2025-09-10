@@ -17,7 +17,7 @@ class PersonalDataTypeSeeder extends Seeder
             return;
         }
 
-        $softwareList = [
+        $personalDataTypeList = [
             'Name',
             'Adresse',
             'Telefonnummer',
@@ -62,7 +62,7 @@ class PersonalDataTypeSeeder extends Seeder
             'Telekommunikationsdaten',
         ];
 
-        foreach ($softwareList as $name) {
+        foreach ($personalDataTypeList as $name) {
             PersonalDataType::query()->create([
                                                    'data_type' => $name,
                                                    'user_id' => $userId,

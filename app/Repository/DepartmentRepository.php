@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Models\PersonalDataType;
+use App\Models\Department;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
-class PersonalDataTypeRepository
+class DepartmentRepository
 {
     /**
      * @param  Request  $request
      *
-     * @return LengthAwarePaginator<int, PersonalDataType>
+     * @return LengthAwarePaginator<int, Department>
      */
     public function all(Request $request): LengthAwarePaginator
     {
-        return PersonalDataType::query()
+        return Department::query()
             ->when(
                 $request->filled('search'),
-                fn ($q) => $q->where('data_type', 'like', '%' . $request->string('search')->value() . '%')
+                fn ($q) => $q->where('department', 'like', '%' . $request->string('search')->value() . '%')
             )
             ->orderBy(
-                $request->input('sort_field') === 'data_type'
+                $request->input('sort_field') === 'department'
                     ? $request->string('sort_field')->value()
                     : 'created_at',
                 in_array($request->input('sort_order'), ['asc', 'desc'], true)
@@ -38,26 +38,26 @@ class PersonalDataTypeRepository
     }
 
     /**
-     * @param  PersonalDataType  $personalDataType
+     * @param  Department  $department
      *
-     * @return PersonalDataType
+     * @return Department
      */
-    public function save(PersonalDataType $personalDataType): PersonalDataType
+    public function save(Department $department): Department
     {
-        $personalDataType->save();
+        $department->save();
 
-        return $personalDataType->refresh();
+        return $department->refresh();
     }
 
     /**
-     * @param  PersonalDataType  $personalDataType
+     * @param  Department  $department
      *
      * @return bool|null
      *
      * @throws Exception
      */
-    public function delete(PersonalDataType $personalDataType): ?bool
+    public function delete(Department $department): ?bool
     {
-        return $personalDataType->delete();
+        return $department->delete();
     }
 }

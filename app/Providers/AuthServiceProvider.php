@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\ConnectedAccount;
+use App\Models\Department;
 use App\Models\Device;
 use App\Models\DeviceStaffMapping;
 use App\Models\MemberOfStaff;
@@ -15,6 +16,7 @@ use App\Models\Questionnaire;
 use App\Models\Software;
 use App\Models\User;
 use App\Policies\ConnectedAccountPolicy;
+use App\Policies\DepartmentPolicy;
 use App\Policies\DevicePolicy;
 use App\Policies\DeviceStaffMappingPolicy;
 use App\Policies\MemberOfStaffPolicy;
@@ -40,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         Questionnaire::class => QuestionnairePolicy::class,
         PersonalDataProcessed::class => PersonalDataProcessedPolicy::class,
         PersonalDataType::class => PersonalDataTypePolicy::class,
+        Department::class => DepartmentPolicy::class,
     ];
 
     /**

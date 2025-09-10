@@ -17,7 +17,7 @@ class PersonalDataProcessedSeeder extends Seeder
             return;
         }
 
-        $softwareList = [
+        $personalDataProcessedList = [
             'Privatkundendaten',
             'Geschäftskundendaten',
             'Daten von Geschäftspartnern',
@@ -26,7 +26,7 @@ class PersonalDataProcessedSeeder extends Seeder
             'Bewerberdaten',
         ];
 
-        foreach ($softwareList as $name) {
+        foreach ($personalDataProcessedList as $name) {
             PersonalDataProcessed::query()->create([
                                  'name' => $name,
                                  'user_id' => $userId,

@@ -1,9 +1,9 @@
 import React from 'react';
 import { router, useForm, usePage } from '@inertiajs/react';
 import {
-    PaginatedPersonalDataTypeInterface, PersonalDataTypeInterface,
-    PersonalDataTypeInterfaceFilters
-} from '@/types/personal-data-types';
+    PaginatedDepartmentInterface, DepartmentInterface,
+    DepartmentInterfaceFilters
+} from '@/types/department';
 import { Permissions } from '@/types/common';
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -11,14 +11,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { ArrowUpDown, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import PaginatedFooter from '@/components/paginated-footer';
-import CreateUpdatePdt from '@/pages/personal-data-type/create-update-pdt';
-import DeletePdt from '@/pages/personal-data-type/delete-pdt';
+import CreateUpdateDepartment from '@/pages/department/create-update-department';
+import DeleteDepartment from '@/pages/department/delete-department';
 
-function DataTypesList() {
+function DepartmentList() {
     const pageProps = usePage().props;
-    const personal_data_type = pageProps.personal_data_type as PaginatedPersonalDataTypeInterface;
+    const departments = pageProps.departments as PaginatedDepartmentInterface;
     const permissions = pageProps.permissions as Permissions;
-    const filters: PersonalDataTypeInterfaceFilters = pageProps.filters as PersonalDataTypeInterfaceFilters;
+    const filters: DepartmentInterfaceFilters = pageProps.filters as DepartmentInterfaceFilters;
     const { data, setData } = useForm({
         search: filters?.search || '',
         per_page: filters?.per_page || '15',
@@ -26,9 +26,9 @@ function DataTypesList() {
         sort_field: filters?.sort_field || '',
     });
 
-    const filterPersonalType = (overrides: Partial<typeof data>) => {
+    const filterDepartment = (overrides: Partial<typeof data>) => {
         router.get(
-            route('personal-data-type.index'),
+            route('department.index'),
             {
                 search: data.search,
                 per_page: data.per_page,
@@ -43,7 +43,7 @@ function DataTypesList() {
         );
     };
 
-    const handleSort = (field: 'data_type') => {
+    const handleSort = (field: 'department') => {
         let order: 'asc' | 'desc' | '' = 'asc';
 
         if (data.sort_field === field) {
@@ -58,7 +58,7 @@ function DataTypesList() {
             sort_order: order,
         });
 
-        filterPersonalType({
+        filterDepartment({
             sort_field: order ? field : '',
             sort_order: order,
         });
@@ -69,10 +69,10 @@ function DataTypesList() {
             <CardHeader className="flex w-full flex-col">
                 <div className="mb-3 flex w-full justify-between">
                     <div>
-                        <CardTitle>Personal Data Type</CardTitle>
-                        <CardDescription>List of all Personal Data Type</CardDescription>
+                        <CardTitle>Department</CardTitle>
+                        <CardDescription>List of all Department</CardDescription>
                     </div>
-                    <CardAction>{permissions.create && <CreateUpdatePdt />}</CardAction>
+                    <CardAction>{permissions.create && <CreateUpdateDepartment />}</CardAction>
                 </div>
 
                 <div className="flex w-full flex-col justify-end md:flex-row">
@@ -80,7 +80,7 @@ function DataTypesList() {
                         value={data.per_page}
                         onValueChange={(value) => {
                             setData('per_page', value);
-                            filterPersonalType({ per_page: value });
+                            filterDepartment({ per_page: value });
                         }}
                     >
                         <SelectTrigger className="mt-1 max-w-20">
@@ -103,10 +103,10 @@ function DataTypesList() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead onClick={() => handleSort('data_type')} className="cursor-pointer">
+                            <TableHead onClick={() => handleSort('department')} className="cursor-pointer">
                                 <div className="flex items-center gap-1">
-                                    Data Type
-                                    <ArrowUpDown size={15} className={data.sort_field === 'data_type' ? 'text-black' : 'text-gray-500'} />
+                                    Department
+                                    <ArrowUpDown size={15} className={data.sort_field === 'department' ? 'text-black' : 'text-gray-500'} />
                                 </div>
                             </TableHead>
                         </TableRow>
@@ -121,9 +121,9 @@ function DataTypesList() {
                                         onChange={(e) => {
                                             const value = e.target.value;
                                             setData('search', value);
-                                            filterPersonalType({ search: value });
+                                            filterDepartment({ search: value });
                                         }}
-                                        placeholder="Search Personal Type Processed"
+                                        placeholder="Search Department"
                                         className="pr-10"
                                     />
                                     {data.search && (
@@ -131,7 +131,7 @@ function DataTypesList() {
                                             type="button"
                                             onClick={() => {
                                                 setData('search', '');
-                                                filterPersonalType({ search: '' });
+                                                filterDepartment({ search: '' });
                                             }}
                                             className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                         >
@@ -143,13 +143,13 @@ function DataTypesList() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {personal_data_type.data.map((data_type: PersonalDataTypeInterface) => (
-                            <TableRow key={data_type.id} className="even:bg-muted">
-                                <TableCell className="font-medium">{data_type.data_type}</TableCell>
+                        {departments.data.map((department: DepartmentInterface) => (
+                            <TableRow key={department.id} className="even:bg-muted">
+                                <TableCell className="font-medium">{department.department}</TableCell>
 
                                 <TableCell className="flex justify-end gap-2">
-                                    {permissions.update && <CreateUpdatePdt personalDataType={data_type} />}
-                                    {permissions.delete && <DeletePdt personalDataType={data_type} />}
+                                    {permissions.update && <CreateUpdateDepartment department={department} />}
+                                    {permissions.delete && <DeleteDepartment department={department} />}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -157,10 +157,10 @@ function DataTypesList() {
                 </Table>
             </CardContent>
             <CardFooter>
-                <PaginatedFooter paginator={personal_data_type} />
+                <PaginatedFooter paginator={departments} />
             </CardFooter>
         </Card>
     );
 }
 
-export default DataTypesList;
+export default DepartmentList;

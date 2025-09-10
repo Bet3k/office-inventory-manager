@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceStaffMappingController;
 use App\Http\Controllers\MemberOfStaffController;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('personal-data-processed', PersonalDataProcessedController::class);
 
     Route::resource('personal-data-type', PersonalDataTypeController::class);
+
+    Route::resource('department', DepartmentController::class);
 });
 
 Route::get('questionnaire', [QuestionnaireController::class, 'create'])->name('questionnaire.create');
